@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Soil Holographic Sensor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <div class="page-content">
+      <h1>Soil Holographic Stream</h1>
+      
+<!--
+      <div>
+        <img scr="/statics/{{filename}}" alt="Most Recent Image">
+      </div>
+-->
+      <div>
+        <img src="{{filename }}" width="50%" alt = "Most Recent Image">
+      </div>
+      <br>
+      
+<!--
+      <h4> Single Shot </h4>
+      <div class="form-input">
+        <form method="POST" action="/capture_image">
+          Filename: <input type="text" name="filename" required="required" placeholder="test.jpg "><br>
+          Arguments (<a href="https://www.raspberrypi.org/documentation/raspbian/applications/camera.md" target="_blank">documentation</a>): <input
+            type="text"
+            name="arguments"
+            placeholder="-t (milliseconds) -tl (milliseconds) --width 1920 --height 1080"
+            title="Inputs are passed to raspistill. See documentation for more details."
+          ><br>
+          <input type="submit" value="Capture Image"></input>
+        </form>
+      </div>
+-->
+      
+      <h4> Time-lapse </h4>
+      <div class = "form-input">
+        <form method="POST" action ="/time_lapse">
+        Filename: <input type="text" name="filename" required="required" placeholder="test.jpg"><br>
+        Arguments <input type="text" name="arguments" placeholder="--awb off --width 1920 --height 1080"
+            title="Inputs are passed to raspistill. See documentation for more details."><br>
+        Total run time (minutes) <input type="integer" name="duration" placeholder="1"><br>
+        Interval between shot (seconds): <input type="integer" name = "interval" placeholder = "15"><br>
+        <input type="submit" value="Start Time Lapse"></input>
+      </div>
+    
+    </div>
+  </body>
+</html>
