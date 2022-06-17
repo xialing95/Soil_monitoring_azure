@@ -7,7 +7,7 @@ import os
 import glob
 from flask import Flask, render_template, Response, request, send_file, jsonify
 
-import time_lapse_app
+import time_lapse_utils
 import utils
 import asyncio
 
@@ -39,7 +39,7 @@ def start_time_lapse():
     print("RPi started taking photos for your timelapse at: " + datetimeformat)
     
     s = time.perf_counter()
-    asyncio.run(time_lapse_app.run(numphotos, secondsinterval, filename))
+    asyncio.run(time_lapse_utils.run(numphotos, secondsinterval, filename))
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
     
