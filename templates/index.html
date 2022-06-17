@@ -23,8 +23,16 @@
         <input type="submit" value="Start Time Lapse"></input>
       </div>
       
-      <h4> Start Time Lapse: {{state}}</h4>
+      <h4> Start Time Lapse: {{state}}, Total Number Photos: {{numphotos}}</h4>
   
+      <h4> Camera Setting </h4>
+      <div class = "form-input">
+        <form method = "POST" action = "/camera_setting">
+        <input type = "button" value = "defaultAGC">AutoGain (Default)</input>
+        
+        <input type = "button" value = "custom">custom</input>
+        </form>
+      </div>
     
     </div>
   </body>

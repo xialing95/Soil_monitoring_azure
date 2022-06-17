@@ -18,6 +18,10 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 def index():
     return render_template('index.html')
 
+@app.route('/camera_setting', methods = ['POST', 'GET'])
+def camera_setting():
+    return
+
 @app.route('/start', methods = ['POST', 'GET'])
 def start_time_lapse():
     #set this to the number of minutes you wish to run your timelapse camera
@@ -39,7 +43,12 @@ def start_time_lapse():
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
     
-    return render_template('index.html', state = 'Done')
+    templateData ={
+        'state' : 'Done',
+        'numphotos' : numphotos
+        }
+    
+    return render_template('index.html', **templateData)
     
 @app.route('/image_preview')
 def image_preview():

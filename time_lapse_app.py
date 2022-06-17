@@ -55,7 +55,14 @@ async def time_lapse(TotalFrames, Interval, NAME):
         
         # capture image (this should be a class called holocam)
         GPIO.output(hw_utils.laser, True)
-        hw_utils.camera.capture(path)
+        
+        try:
+            hw_utils.camera.capture(path)
+        except hw_utils.camera.PiCameraMMALError:
+            hw_utils.camera_close()
+        except hw_tuils.camera.PiCameraClosed:
+            hw_utils.camera_init()
+            
         GPIO.output(hw_utils.laser, False)
         
         # log soil sensor data on SoilState.txt

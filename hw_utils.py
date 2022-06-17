@@ -22,7 +22,7 @@ def camera_init():
     #with picamera.PiCamera() as camera:
     camera.resolution = (1280, 720)
 #     camera.framerate = 30
-#     camera.iso =  10
+#     camera.iso =  50 
     # Wait for automatic gain control to settle
     time.sleep(2)
     GPIO.output(laser, False)
