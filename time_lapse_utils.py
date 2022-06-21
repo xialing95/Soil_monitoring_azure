@@ -45,7 +45,6 @@ def soil_condition_log(filename: str):
 
 async def time_lapse(TotalFrames, Interval, NAME):
     # start camera & set camera state as false when time lapse is running
-    hw_utils.camera_init()
     utils.write_boolean_to_file('static/CameraState.txt', False)
     for i in range(TotalFrames):
         # get the time to create the name of the file
@@ -91,7 +90,7 @@ async def upload_to_azure():
             await asyncio.sleep(1)
         # else upload file to azure
         else:
-             try:
+            try:
                 log_f = open('static/log.txt', 'r+')               
                 #await asyncio.sleep(1)
                 ImageList = log_f.readlines()
@@ -103,7 +102,7 @@ async def upload_to_azure():
                 log_f.truncate()
                 log_f.writelines(ImageList[1:])
                 log_f.close()
-             except:
+            except:
                  print("Time-lapse still going, but empty file")
     return 
 

@@ -8,31 +8,39 @@
       
       <h1>Soil Holographic Stream</h1>
       
-      <h4>Latest Image Preview</h4>
+      <h3>Latest Image Preview</h3>
       <div>
         <img src="{{ url_for('image_preview') }}" width="50%">
       </div>
-         
+  
+      <h3> Camera Setting </h3>
+      <div class = "form-input">        
+        <form method = "POST" action = "/camera_setting">
+        <ul style="list-style-type:none;">        
+        <li>Resolution <input type="string" name = "resolution" value = "(1280, 720)" placeholder = "(1280, 720)"></li>
+        <li>Framerate <input type="range" name = "framerate" value = "30" placeholder = "30"></li>
+        <li>ISO (gain) <input type="range" name = "iso" min="60" max="600" value = "400"></li>
+        <li>Shutter Speed <input type="integer" name = "expSpd" value= "1000" placeholder = "1000 (1ms)"></li>
+        <li>Exposure Mode <input type="string" name = "expMod" value = "auto" placeholder = "auto/off"></li>
+        <li>Auto White Balance Mode <input type="string" value = "auto" name = "awbMod" placeholder = "auto/off"></li>
+        <li>Auto White Balance Gain <input type="integer" value = "1" name = "awbGain" placeholder = "0.0-8.0"></li>
+        </ul>
+        <input type = "submit" value = "Preview Camera Setting"></input> 
+        </form>
       
-      <h4> Time Lapse Setting </h4>
+      </div>
+      
+      <form method="POST" action ="/start">
+      <h3> Time Lapse Setting </h3>
       <div class = "form-input">
-        <form method="POST" action ="/start">
         Filename: <input type="text" name="filename" placeholder="test.jpg"><br>
         Total run time (minutes) <input type="integer" name="duration" placeholder="1"><br>
         Interval between shot (seconds): <input type="integer" name = "interval" placeholder = "15"><br>
-        <input type="submit" value="Start Time Lapse"></input>
-      </div>
-      
-      <h4> Start Time Lapse: {{state}}, Total Number Photos: {{numphotos}}</h4>
-  
-      <h4> Camera Setting </h4>
-      <div class = "form-input">
-        <form method = "POST" action = "/camera_setting">
-        <input type = "button" value = "defaultAGC">AutoGain (Default)</input>
-        
-        <input type = "button" value = "custom">custom</input>
+        <input type="submit" value="startTimeLapse"></input>
         </form>
       </div>
+      
+      <h4> Execution time (seconds): {{elapseTime}}, Total Number Photos: {{numphotos}}</h4>      
     
     </div>
   </body>

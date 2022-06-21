@@ -17,6 +17,7 @@ def light_init():
 
 def camera_init(): 
     global camera
+    light_init()
     GPIO.output(laser, True)
     camera = picamera.PiCamera()
     #with picamera.PiCamera() as camera:
