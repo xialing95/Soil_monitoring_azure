@@ -12,9 +12,12 @@ import hw_utils
 import utils
 import asyncio
 import RPi.GPIO as GPIO
+import azure_utils
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+subprocess.call(["hostname", "-I"])
 
 @app.route('/')
 def index():
@@ -82,8 +85,8 @@ def start_time_lapse():
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
     
-    #upload txt file 
-    
+    #upload txt file to azure blob
+    azure_utils.upload_to_azure_blob("CameraState.txt")
     templateData ={
         'startTime' : datetimeformat,
         'elapseTime' : elapsed,
@@ -102,18 +105,6 @@ def image_preview():
     return Response(generate(), 
                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/file_setting', methods=['GET', 'POST'])
-def file_setting():
-    #set this to the number of minutes you wish to run your timelapse camera
-    tlminutes = float(request.form.get('duration'))
-    #number of seconds delay between each photo taken
-    secondsinterval = int(request.form.get('interval'))
-    filename = request.form.get('filename')
-    arguments = request.form.get('arguments')
-    #number of photos to take
-    numphotos = int((tlminutes*60)/secondsinterval) 
-    print("number of photos to take = ", numphotos)
-
-
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=True)
+

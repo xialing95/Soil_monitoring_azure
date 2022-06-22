@@ -16,15 +16,24 @@
       <h3> Camera Setting </h3>
       <div class = "form-input">        
         <form method = "POST" action = "/camera_setting">
+        
         <ul style="list-style-type:none;">        
-        <li>Resolution: {{resolution}} <input type="string" name = "resolution" value = "(1280, 1280)" placeholder = "(1280, 1280)"></li>
-        <li>Framerate: {{framerate}} <input type="range" name = "framerate" value = "30" placeholder = "30"></li>
-        <li>ISO (gain): {{iso}} <input type="range" name = "iso" min="60" max="600" value = "400"></li>
-        <li>Shutter Speed: {{expSpd}} <input type="integer" name = "expSpd" value= "1000" placeholder = "1000 (1ms)"></li>
-        <li>Exposure Mode: {{expMod}} <input type="string" name = "expMod" value = "auto" placeholder = "auto/off"></li>
-        <li>Auto White Balance Mode: {{awbMod}} <input type="string" value = "auto" name = "awbMod" placeholder = "auto/off"></li>
-        <li>Auto White Balance Gain: {{awbGain}} <input type="integer" value = "1" name = "awbGain" placeholder = "0.0-8.0"></li>
+          <li>Resolution: <b>{{resolution}}</b> 
+            <input type="string" name = "resolution" value = {{resolution}}></li>
+          <li>Framerate (10-30): <b>{{framerate}}</b> 
+            <input type="integer" name = "framerate" value = {{framerate}} ></li>
+          <li>ISO (gain) (50-600): <b>{{iso}}</b> 
+            <input type="integer" name = "iso" value = {{iso}} ></li>
+          <li>Shutter Speed (1000us): <b>{{expSpd}}</b> 
+            <input type="integer" name = "expSpd" value= {{expSpd}} ></li>
+          <li>Exposure Mode (auto/off): <b>{{expMod}}</b> 
+            <input type="string" name = "expMod" value = {{expMod}} ></li>
+          <li>Auto White Balance Mode (auto/off): <b>{{awbMod}}</b> 
+            <input type="string" name = "awbMod" value = {{awbMod}} ></li>
+          <li>Auto White Balance Gain (0.9-1.9): <b>{{awbGain}}</b> 
+            <input type="integer" name = "awbGain" value = {{awbGain}}  ></li>
         </ul>
+        
         <input type = "submit" value = "Preview Camera Setting"></input> 
         </form>
       
