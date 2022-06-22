@@ -44,5 +44,10 @@ def camera_close():
 def soil_sensor_init():
     i2c_bus = board.I2C()
     global soilsensor
-    soilsensor = Seesaw(i2c_bus, addr = 0x36)
+    try:
+        soilsensor = Seesaw(i2c_bus, addr = 0x36)
+    except ValueError as err:
+        print(err)
+        print("Please connect the I2C Device")
+        
     return

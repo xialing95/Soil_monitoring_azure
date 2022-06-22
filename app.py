@@ -17,8 +17,8 @@ import azure_utils
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-subprocess.call(["hostname", "-I"])
-
+print("IP: " + subprocess.check_output(["hostname -I | cut -d' ' -f1"], shell=True).decode("utf-8"))
+      
 @app.route('/')
 def index():
     return render_template('index.html')
