@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 import time
 import board
 from adafruit_seesaw.seesaw import Seesaw
+import json
 
 
 ### Light and Camera Setup ###
@@ -18,22 +19,22 @@ def light_init():
 def camera_init(): 
     global camera
     light_init()
+    with open("CAMERASETTING.json") as file:
+        data = json.load(file)
+        
     GPIO.output(laser, True)
     camera = picamera.PiCamera()
     #with picamera.PiCamera() as camera:
-    camera.resolution = (1280, 720)
-#     camera.framerate = 30
-#     camera.iso =  50 
+    camera.resolution = data["resolution"]
+    camera.framerate = data["framerate"]
+    camera.iso = data["iso"]
     # Wait for automatic gain control to settle
     time.sleep(2)
     GPIO.output(laser, False)
-#     # Fix the values
-#     camera.shutter_speed = camera.exposure_speed
-#     camera.exposure_mode = 'off'
-#     #set constant gain
-#     g = camera.awb_gains
-#     camera.awb_mode = "off"
-#     camera.awb_gains = g
+    camera.shutter_speed = data["expSpd"]
+    camera.exposure_mode = data["expMod"]
+    camera.awb_mode = data["awbMod"]
+    camera.awb_gains = data["awbGain"]
     return
 
 def camera_close():

@@ -5,7 +5,7 @@ import time
 import subprocess
 import os
 import glob
-from flask import Flask, render_template, Response, request, send_file, jsonify
+from flask import Flask, render_template, Response, request, json, jsonify
 
 import time_lapse_utils
 import hw_utils
@@ -22,8 +22,6 @@ def index():
 
 @app.route('/camera_setting', methods = ['POST', 'GET'])
 def camera_setting():
-    hw_utils.camera_init()
-
     resolution = eval(request.form.get('resolution'))
     framerate = int(request.form.get('framerate'))
     iso = int(request.form.get('iso'))
@@ -31,20 +29,25 @@ def camera_setting():
     expMod = str(request.form.get('expMod'))
     awbMod = str(request.form.get('awbMod'))
     awbGain = int(request.form.get('awbGain'))
-    #save camera setting to json file
     
-    # print(resolution + " " + framerate + " " + iso + " " + expSpd + " " + expMod + " "+ awbGain)
-    hw_utils.camera.resolution = resolution
-    hw_utils.camera.framerate = framerate
-    hw_utils.camera.iso = iso
-    hw_utils.camera.shutter_speed = expSpd
-    hw_utils.camera.exposure_mode = expMod
-    hw_utils.camera.awb_mode = awbMod
-    hw_utils.camera.awb_gains = awbGain
+    #save camera setting to json file
+    CAMERASETTING = {
+        "resolution" : resolution,
+        "framerate" : framerate,
+        "iso" : iso,
+        "expSpd" : expSpd,
+        "expMod" : expMod,
+        "awbMod" : awbMod,
+        "awbGain" : awbGain
+        }
+    with open("CAMERASETTING.json", "w") as file:
+        json.dump(CAMERASETTING, file)
+    
+    # init camera with custom setting
+    hw_utils.camera_init()
     
     # capture image (this should be a class called holocam)
     GPIO.output(hw_utils.laser, True)
-    
     try:
         hw_utils.camera.capture('static/preview.jpg')
     except hw_utils.camera.exc.PiCameraMMALError():
@@ -53,10 +56,10 @@ def camera_setting():
         hw_utils.camera_init()
         
     GPIO.output(hw_utils.laser, False)
+    
     # close camera after time lapse to avoid out of resources error
     hw_utils.camera_close()
-    
-    return render_template('index.html')
+    return render_template('index.html', **CAMERASETTING)
 
 @app.route('/start', methods = ['POST', 'GET'])
 def start_time_lapse():
@@ -78,6 +81,8 @@ def start_time_lapse():
     asyncio.run(time_lapse_utils.run(numphotos, secondsinterval, filename))
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
+    
+    #upload txt file 
     
     templateData ={
         'startTime' : datetimeformat,

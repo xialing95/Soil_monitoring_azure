@@ -17,13 +17,13 @@
       <div class = "form-input">        
         <form method = "POST" action = "/camera_setting">
         <ul style="list-style-type:none;">        
-        <li>Resolution <input type="string" name = "resolution" value = "(1280, 720)" placeholder = "(1280, 720)"></li>
-        <li>Framerate <input type="range" name = "framerate" value = "30" placeholder = "30"></li>
-        <li>ISO (gain) <input type="range" name = "iso" min="60" max="600" value = "400"></li>
-        <li>Shutter Speed <input type="integer" name = "expSpd" value= "1000" placeholder = "1000 (1ms)"></li>
-        <li>Exposure Mode <input type="string" name = "expMod" value = "auto" placeholder = "auto/off"></li>
-        <li>Auto White Balance Mode <input type="string" value = "auto" name = "awbMod" placeholder = "auto/off"></li>
-        <li>Auto White Balance Gain <input type="integer" value = "1" name = "awbGain" placeholder = "0.0-8.0"></li>
+        <li>Resolution: {{resolution}} <input type="string" name = "resolution" value = "(1280, 1280)" placeholder = "(1280, 1280)"></li>
+        <li>Framerate: {{framerate}} <input type="range" name = "framerate" value = "30" placeholder = "30"></li>
+        <li>ISO (gain): {{iso}} <input type="range" name = "iso" min="60" max="600" value = "400"></li>
+        <li>Shutter Speed: {{expSpd}} <input type="integer" name = "expSpd" value= "1000" placeholder = "1000 (1ms)"></li>
+        <li>Exposure Mode: {{expMod}} <input type="string" name = "expMod" value = "auto" placeholder = "auto/off"></li>
+        <li>Auto White Balance Mode: {{awbMod}} <input type="string" value = "auto" name = "awbMod" placeholder = "auto/off"></li>
+        <li>Auto White Balance Gain: {{awbGain}} <input type="integer" value = "1" name = "awbGain" placeholder = "0.0-8.0"></li>
         </ul>
         <input type = "submit" value = "Preview Camera Setting"></input> 
         </form>
