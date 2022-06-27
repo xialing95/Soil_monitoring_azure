@@ -3,17 +3,19 @@ import asyncio
 import RPi.GPIO as GPIO
 import os
 import time
+from flask import Flask, render_template, Response, request, send_file, jsonify
 
+# import custom library
+import utils
+import azure_utils
+import hw_utils
+
+# set file directory
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
 APP_STATIC = os.path.join(APP_ROOT, 'static')
 
-from flask import Flask, render_template, Response, request, send_file, jsonify
-
-import utils
-import azure_utils
-
-import hw_utils
-hw_utils.light_init()
+# init hardware setup
+# hw_utils.light_init()
 hw_utils.soil_sensor_init()
 
 # create SoilState file if not exist 
@@ -25,6 +27,7 @@ if not os.path.exists('static/SoilState.txt'):
 else:
     print('SoilState.txt exist')
 
+# create and clear Camera State text file 
 camera_f = open('static/CameraState.txt', 'w')
 camera_f.close()
 
@@ -34,6 +37,7 @@ def update_log(filename: str):
     log_f.close()
     return
 
+# write on the soil log file
 def soil_condition_log(filename: str):
     moisture = hw_utils.soilsensor.moisture_read()
     temp = hw_utils.soilsensor.get_temp()
@@ -43,9 +47,11 @@ def soil_condition_log(filename: str):
     sensorlog_f.close()
     return
 
-async def time_lapse(TotalFrames, Interval, NAME):
+# time lapse function
+async def time_lapse(HolocamObj, TotalFrames, Interval, NAME):
     # start camera & set camera state as false when time lapse is running
     utils.write_boolean_to_file('static/CameraState.txt', False)
+    
     for i in range(TotalFrames):
         # get the time to create the name of the file
         timestr = time.strftime("%H%M%S", time.localtime())
@@ -53,16 +59,18 @@ async def time_lapse(TotalFrames, Interval, NAME):
         path = os.path.join(APP_STATIC, imageName)
         
         # capture image (this should be a class called holocam)
-        GPIO.output(hw_utils.laser, True)
+        # GPIO.output(hw_utils.laser, True)
         
-        try:
-            hw_utils.camera.capture(path)
-        except hw_utils.camera.PiCameraMMALError:
-            hw_utils.camera_close()
-        except hw_tuils.camera.PiCameraClosed:
-            hw_utils.camera_init()
+#         try:
+#             #hw_utils.camera.capture(path)
+#             holocam.camera_capture(path)
+#         except hw_utils.camera.PiCameraMMALError:
+#             hw_utils.camera_close()
+#         except hw_tuils.camera.PiCameraClosed:
+#             hw_utils.camera_init()
             
-        GPIO.output(hw_utils.laser, False)
+        #GPIO.output(hw_utils.laser, False)
+        HolocamObj.capture(path)
         
         # log soil sensor data on SoilState.txt
         # and image name for uploading
@@ -72,7 +80,9 @@ async def time_lapse(TotalFrames, Interval, NAME):
         await asyncio.sleep(Interval)
         
     # close camera after time lapse to avoid out of resources error
-    hw_utils.camera_close()
+    #hw_utils.camera_close()
+    HolocamObj.camera.close()
+    
     # finish running time lapse camera state is true
     return utils.write_boolean_to_file('static/CameraState.txt', True)
 
@@ -106,15 +116,19 @@ async def upload_to_azure():
                  print("Time-lapse still going, but empty file")
     return 
 
-async def run(TotalFrames, Interval, NAME):
+async def run(HolocamObj, TotalFrames, Interval, NAME):
     await asyncio.gather(
-        asyncio.create_task(time_lapse(TotalFrames, Interval, NAME)),
+        asyncio.create_task(time_lapse(HolocamObj, TotalFrames, Interval, NAME)),
         asyncio.create_task(upload_to_azure())
     )
     return
-    
+
+
+# from hw_utils import Holocam
+# holocam = Holocam()
+# 
 # s = time.perf_counter()
-# asyncio.run(main())
+# asyncio.run(run(holocam, 3, 3, 'test.jpg'))
 # elapsed = time.perf_counter() - s
 # print(f"{__file__} executed in {elapsed:0.2f} seconds.")
 

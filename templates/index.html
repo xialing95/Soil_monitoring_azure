@@ -18,19 +18,19 @@
         <form method = "POST" action = "/camera_setting">
         
         <ul style="list-style-type:none;">        
-          <li>Resolution: <b>{{resolution}}</b> 
-            <input type="string" name = "resolution" value = {{resolution}}></li>
-          <li>Framerate (10-30): <b>{{framerate}}</b> 
+          <li>Resolution: (640, 640): <b>{{resolution}}</b> 
+            <input type="string" name = "resolution" value = "{{resolution}}"></li>
+          <li>Framerate: 10-30: <b>{{framerate}}</b> 
             <input type="integer" name = "framerate" value = {{framerate}} ></li>
-          <li>ISO (gain) (50-600): <b>{{iso}}</b> 
+          <li>ISO (gain): 50-600: <b>{{iso}}</b> 
             <input type="integer" name = "iso" value = {{iso}} ></li>
-          <li>Shutter Speed (1000us): <b>{{expSpd}}</b> 
+          <li>Shutter Speed (us): 50-10000: <b>{{expSpd}}</b> 
             <input type="integer" name = "expSpd" value= {{expSpd}} ></li>
-          <li>Exposure Mode (auto/off): <b>{{expMod}}</b> 
+          <li>Exposure Mode: auto/off: <b>{{expMod}}</b> 
             <input type="string" name = "expMod" value = {{expMod}} ></li>
-          <li>Auto White Balance Mode (auto/off): <b>{{awbMod}}</b> 
+          <li>Auto White Balance Mode: auto/off: <b>{{awbMod}}</b> 
             <input type="string" name = "awbMod" value = {{awbMod}} ></li>
-          <li>Auto White Balance Gain (0.9-1.9): <b>{{awbGain}}</b> 
+          <li>Auto White Balance Gain: 0.9-1.9: <b>{{awbGain}}</b> 
             <input type="integer" name = "awbGain" value = {{awbGain}}  ></li>
         </ul>
         
