@@ -8,7 +8,7 @@ import glob
 from flask import Flask, render_template, Response, request, json, jsonify
 
 import time_lapse_utils
-from hw_utils import Holocam, soil_sensor_init
+from hw_utils import Holocam, soil_sensor_init, shutdown_bnt
 import utils
 import asyncio
 import RPi.GPIO as GPIO
@@ -24,6 +24,8 @@ IP_STR = "IP: " + subprocess.check_output(["hostname -I | cut -d' ' -f1"],shell=
 display = display_utils.Display()
 display.clear()
 display.text(IP_STR, 0)
+
+shutdown_bnt(18) #GPIO18
 
 @app.route('/')
 def index():
@@ -136,4 +138,5 @@ def image_preview():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=True)
+
 

@@ -6,9 +6,12 @@ import busio
 from adafruit_seesaw.seesaw import Seesaw
 import json
 import subprocess
+import signal
+import sys
 
+# Holocam class
 class Holocam:
-    def __init__(self, laserPin = 17):
+    def __init__(self, laserPin = 24):
         self.laserPin = laserPin
         # initalize the laser GPIO & Camera setting
         self.laser_init()
@@ -82,17 +85,25 @@ def soil_sensor_init():
         
     return       
 
-# def shutdown_switch():
-#     GPIO.setmode(GPIO.BCM)
-#     shutdownPin = 26 #GPIO26, board pin 35
-#     GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#     
-#     GPIO.wait_for_edge(shutdownPin, GPIO.FALLING)
-#     subprocess.call(['sudo shutdown "System halted by power switch "'], shell=True)
+def shutdown_callback(channel):
+    print("Shutdown Started")
+    GPIO.cleanup()
+    subprocess.call(['sudo shutdown now "System halted by power switch "'], shell=True)
+
+# def signal_handler(sig, frame):
 # 
-#     # clean up GPIO on normal exit
-#     GPIO.cleanup()
+#     sys.exit(0)
     
+def shutdown_bnt(shutdownPin):
+    print("shutdown pin started")
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    
+    GPIO.add_event_detect(shutdownPin, GPIO.FALLING,
+                          callback=shutdown_callback, bouncetime = 100)
+
+#     signal.signal(signal.SIGINT, signal_handler)
+#     signal.pause()
 
 # ### Light and Camera Setup ###
 # def light_init():

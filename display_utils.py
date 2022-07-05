@@ -18,9 +18,9 @@ class Display:
         # Configuration for CS and DC pins (these are PiTFT defaults):
         cs_pin = digitalio.DigitalInOut(board.CE0)
         dc_pin = digitalio.DigitalInOut(board.D25)
-        reset_pin = digitalio.DigitalInOut(board.D24)
+        reset_pin = digitalio.DigitalInOut(board.D22)
         # Turn on the Backlight
-        backlight = digitalio.DigitalInOut(board.D23)
+        backlight = digitalio.DigitalInOut(board.D27)
         backlight.switch_to_output()
         backlight.value = True
         # Config for display baudrate (default max is 24mhz):
