@@ -100,7 +100,7 @@ def shutdown_bnt(shutdownPin):
     GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
     GPIO.add_event_detect(shutdownPin, GPIO.FALLING,
-                          callback=shutdown_callback, bouncetime = 100)
+                          callback=shutdown_callback, bouncetime = 2000)
 
 #     signal.signal(signal.SIGINT, signal_handler)
 #     signal.pause()
