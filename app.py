@@ -66,22 +66,8 @@ def camera_setting():
     with open("CAMERASETTING.json", "w") as file:
         json.dump(CAMERASETTING, file)
     
-    # init camera with custom setting
-    #hw_utils.camera_init()
     holocam = Holocam()
-    
-#     # capture image (this should be a class called holocam)
-#     GPIO.output(hw_utils.laser, True)
-#     try:
-#         hw_utils.camera.capture('static/preview.jpg')
-#     except hw_utils.camera.exc.PiCameraMMALError():
-#         hw_utils.camera_close()
-#     except hw_tuils.camera.PiCameraClosed:
-#         hw_utils.camera_init()
-#         
-#     GPIO.output(hw_utils.laser, False)
     holocam.capture('static/preview.jpg')
-    
     # close camera after time lapse to avoid out of resources error
     holocam.camera_close()
     display.text("Camera set", 1)
@@ -89,6 +75,7 @@ def camera_setting():
 
 @app.route('/start', methods = ['POST', 'GET'])
 def start_time_lapse():
+    
     #hw_utils.camera_init()
     holocam = Holocam()
     
@@ -115,7 +102,7 @@ def start_time_lapse():
     display.text("Time Lapse Done", 3)
 
     #upload txt file to azure blob
-    azure_utils.upload_to_azure_blob("CameraState.txt")
+    asyncio.run(azure_utils.upload_to_azure_blob("SoilState.txt"))
     
     #update flask UI 
     templateData ={
