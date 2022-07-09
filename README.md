@@ -4,9 +4,10 @@ Soil holographic microbes monitoring
 How connect to the soil sensor (July 9 2022)
 
 If you want to test without putting the electronics in the housing. 
+	<ul>
 	<li>Plug in the HDMI and the keyboard first before the green power cable. Do not plug in the power usb and the battery power at the same time!!!! 
-	•	Wait for the raspi to boot up.
-	•	Currently we have the system on auto run the app script on reboot, but for some reason the script does not work. So instead, we are going to close the script and run it normally
+	<li>PWait for the raspi to boot up.</li>
+	<li>	Currently we have the system on auto run the app script on reboot, but for some reason the script does not work. So instead, we are going to close the script and run it normally
 	⁃	If you see “Soilstate.txt started” and the IP address, and flask server is running on the monitor it means that the script is running and we want to exit out of it. 
 	⁃	To exit the script press control + C. 
 	⁃	You should see pi@soilsensor2 $ on the command line. 
