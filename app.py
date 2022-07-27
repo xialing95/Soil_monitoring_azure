@@ -21,6 +21,8 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 #hw_utils.shutdown_switch()
 
 IP_STR = "IP: " + subprocess.check_output(["hostname -I | cut -d' ' -f1"],shell=True).decode("utf-8")
+print(IP_STR)
+global display
 display = display_utils.Display()
 display.clear()
 display.text(IP_STR, 0)
@@ -31,6 +33,7 @@ shutdown_bnt(18) #GPIO18
 def index():
     # setup the hardware sensor & checking on the status
     soil_sensor_init()
+
     moisture = soilsensor.moisture_read()
     temp = soilsensor.get_temp()
     
@@ -39,6 +42,8 @@ def index():
             soil_sensor_init()
             moisture = soilsensor.moisture_read()
             temp = soilsensor.get_temp()
+            print("turning display off")
+
         
     #update flask UI 
     templateData ={
@@ -93,7 +98,6 @@ def camera_setting():
 
 @app.route('/start', methods = ['POST', 'GET'])
 def start_time_lapse():
-    
     #hw_utils.camera_init()
     holocam = Holocam()
     
@@ -114,6 +118,7 @@ def start_time_lapse():
     
     #Start time-lapse
     s = time.perf_counter()
+    display.text("Time Lapse On", 3)
     asyncio.run(time_lapse_utils.run(holocam, numphotos, secondsinterval, filename))
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")

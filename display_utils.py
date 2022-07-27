@@ -65,5 +65,9 @@ class Display:
         self.draw.text((self.x, self.y), text, font = self.font, fill = "#FFFFFF")
         self.disp.image(self.image)
     
-    #def off(self):
+    def off(self):
+        # Turn on the Backlight
+        backlight = digitalio.DigitalInOut(board.D27)
+        backlight.switch_to_output()
+        backlight.value = False
         

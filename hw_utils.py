@@ -37,8 +37,14 @@ class Holocam:
         
         try:
             self.camera = picamera.PiCamera()
-        except self.camera.PiCameraMMALError:
+        except Exception as e:
             self.camera_close()
+            print(e)
+        
+#         try:
+#             self.camera = picamera.PiCamera()
+#         except self.camera.PiCameraMMALError:
+#             self.camera_close()
         
         try:    
             self.camera.resolution = data["resolution"]
@@ -64,15 +70,29 @@ class Holocam:
         
         try:
             self.camera_capture(path)
-        except self.camera.PiCameraMMALError:
+        except Exception as e:
             self.camera_close()
-        except self.camera.PiCameraClosed:
             self.camera_init()
+            print(e)
+            
+#         try:
+#             self.camera_capture(path)
+#         except self.camera.PiCameraMMALError:
+#             self.camera_close()
+#         except self.camera.PiCameraClosed:
+#             self.camera_init()
         
         self.laser_off()
     
     def camera_close(self):
         self.camera.close()
+
+# I2C sensor Class
+# class Soilsensor:
+#     def __init__(self):
+#         self.i2c_bus = board.I2C()
+#         self.
+
 
 def soil_sensor_init():
     i2c_bus = board.I2C()
@@ -82,10 +102,17 @@ def soil_sensor_init():
     except ValueError as err:
         print(err)
         print("Please connect the I2C Device")
-    return True       
+    return      
 
 def shutdown_callback(channel):
     print("Shutdown Started")
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(27, GPIO.OUT)
+    GPIO.output(27, False)
+    GPIO.setup(22, GPIO.OUT)
+    GPIO.output(22, False)
+    GPIO.setup(25, GPIO.OUT)
+    GPIO.output(25, False)
     GPIO.cleanup()
     subprocess.call(['sudo shutdown now "System halted by power switch "'], shell=True)
 
