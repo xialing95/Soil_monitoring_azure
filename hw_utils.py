@@ -82,8 +82,7 @@ def soil_sensor_init():
     except ValueError as err:
         print(err)
         print("Please connect the I2C Device")
-        
-    return       
+    return True       
 
 def shutdown_callback(channel):
     print("Shutdown Started")

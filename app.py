@@ -8,7 +8,7 @@ import glob
 from flask import Flask, render_template, Response, request, json, jsonify
 
 import time_lapse_utils
-from hw_utils import Holocam, soil_sensor_init, shutdown_bnt
+from hw_utils import Holocam, soil_sensor_init, shutdown_bnt, soilsensor
 import utils
 import asyncio
 import RPi.GPIO as GPIO
@@ -27,9 +27,27 @@ display.text(IP_STR, 0)
 
 shutdown_bnt(18) #GPIO18
 
-@app.route('/')
+@app.route('/', methods = ['POST', 'GET'])
 def index():
-    return render_template('index.html')
+    # setup the hardware sensor & checking on the status
+    soil_sensor_init()
+    moisture = soilsensor.moisture_read()
+    temp = soilsensor.get_temp()
+    
+    if request.method =='POST':
+        if request.form['reset_i2c'] == 'Reset I2C':
+            soil_sensor_init()
+            moisture = soilsensor.moisture_read()
+            temp = soilsensor.get_temp()
+        
+    #update flask UI 
+    templateData ={
+        'temp' : temp,
+        'moisture' : moisture,
+        }
+    
+    return render_template('index.html', **templateData)
+
 
 @app.route('/camera_setting', methods = ['POST', 'GET'])
 def camera_setting():

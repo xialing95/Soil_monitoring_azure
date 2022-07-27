@@ -8,6 +8,16 @@
       
       <h1>Soil Holographic Stream</h1>
       
+      <form method="POST" action ="/">
+        <div class = "form-input">
+          <h4> I2C Sensor Temperature: {{temp}}, Moisture: {{moisture}}
+            <input type="submit" name="reset_i2c" value="Reset I2C"></input></h4> 
+          <h4> I2C Sensor Temperature: {{temp}}, Moisture: {{moisture}}
+            <input type="submit" name="reset_i2c" value="Reset I2C"></input></h4> 
+        </div>
+      </form>
+
+      
       <h3>Latest Image Preview</h3>
       <div>
         <img src="{{ url_for('image_preview') }}" width="50%">
