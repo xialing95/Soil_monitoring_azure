@@ -22,11 +22,13 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 IP_STR = "IP: " + subprocess.check_output(["hostname -I | cut -d' ' -f1"],shell=True).decode("utf-8")
 print(IP_STR)
+WIFI_STR = "IP: " + subprocess.check_output(["iwgetid | cut -d' ' -f6"],shell=True).decode("utf-8")
+print(WIFI_STR)
 global display
 display = display_utils.Display()
 display.clear()
 display.text(IP_STR, 0)
-
+display.text(WIFI_STR, 1)
 shutdown_bnt(18) #GPIO18
 
 @app.route('/', methods = ['POST', 'GET'])
