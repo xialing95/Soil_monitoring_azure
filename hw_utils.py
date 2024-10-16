@@ -2,7 +2,7 @@ import picamera2
 import RPi.GPIO as GPIO
 import time
 # import board
-import busio
+# import busio
 # from adafruit_seesaw.seesaw import Seesaw
 import json
 import subprocess
