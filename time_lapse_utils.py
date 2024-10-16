@@ -16,7 +16,7 @@ APP_STATIC = os.path.join(APP_ROOT, 'static')
 
 # init hardware setup
 # hw_utils.light_init()
-hw_utils.soil_sensor_init()
+# hw_utils.soil_sensor_init()
 
 # create SoilState file if not exist 
 if not os.path.exists(APP_STATIC + '/SoilState.txt'):
@@ -39,8 +39,10 @@ def update_log(filename: str):
 
 # write on the soil log file
 def soil_condition_log(filename: str):
-    moisture = hw_utils.soilsensor.moisture_read()
-    temp = hw_utils.soilsensor.get_temp()
+    # moisture = hw_utils.soilsensor.moisture_read()
+    # temp = hw_utils.soilsensor.get_temp()
+    moisture = "N/A"
+    temp = "N/A"
     
     sensorlog_f = open(APP_STATIC + '/SoilState.txt', 'a')
     sensorlog_f.write(str(filename) + ", " + str(temp) + ", " + str(moisture) + "\n")
@@ -108,7 +110,7 @@ async def time_lapse(HolocamObj, TotalFrames, Interval, NAME):
 async def run(HolocamObj, TotalFrames, Interval, NAME):
     await asyncio.gather(
         asyncio.create_task(time_lapse(HolocamObj, TotalFrames, Interval, NAME)),
-        asyncio.create_task(upload_to_azure())
+        # asyncio.create_task(upload_to_azure())
     )
     return
 

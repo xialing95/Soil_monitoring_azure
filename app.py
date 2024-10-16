@@ -8,42 +8,48 @@ import glob
 from flask import Flask, render_template, Response, request, json, jsonify
 
 import time_lapse_utils
-from hw_utils import Holocam, soil_sensor_init, shutdown_bnt, soilsensor
+from hw_utils import Holocam
+# from hw_utils soil_sensor_init, soilsensor
+# from hw_utils shutdown_bnt
 import utils
 import asyncio
 import RPi.GPIO as GPIO
 # import azure_utils
-import display_utils
+# import display_utils
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 #hw_utils.shutdown_switch()
 
-IP_STR = "IP: " + subprocess.check_output(["hostname -I | cut -d' ' -f1"],shell=True).decode("utf-8")
-print(IP_STR)
-WIFI_STR = "IP: " + subprocess.check_output(["iwgetid | cut -d' ' -f6"],shell=True).decode("utf-8")
-print(WIFI_STR)
-global display
-display = display_utils.Display()
-display.clear()
-display.text(IP_STR, 0)
-display.text(WIFI_STR, 1)
-shutdown_bnt(18) #GPIO18
+# IP_STR = "IP: " + subprocess.check_output(["hostname -I | cut -d' ' -f1"],shell=True).decode("utf-8")
+# print(IP_STR)
+# WIFI_STR = "IP: " + subprocess.check_output(["iwgetid | cut -d' ' -f6"],shell=True).decode("utf-8")
+# print(WIFI_STR)
+# global display
+# display = display_utils.Display()
+# display.clear()
+# display.text(IP_STR, 0)
+# display.text(WIFI_STR, 1)
+# shutdown_bnt(18) #GPIO18
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     # setup the hardware sensor & checking on the status
-    soil_sensor_init()
+    # soil_sensor_init()
 
-    moisture = soilsensor.moisture_read()
-    temp = soilsensor.get_temp()
+    # moisture = soilsensor.moisture_read()
+    # temp = soilsensor.get_temp()
+    moisture = "N/A"
+    temp = "N/A"
     
     if request.method =='POST':
         if request.form['reset_i2c'] == 'Reset I2C':
-            soil_sensor_init()
-            moisture = soilsensor.moisture_read()
-            temp = soilsensor.get_temp()
+            # soil_sensor_init()
+            # moisture = soilsensor.moisture_read()
+            # temp = soilsensor.get_temp()
+            moisture = "N/A"
+            temp = "N/A"
             print("turning display off")
 
         
