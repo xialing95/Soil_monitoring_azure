@@ -1,4 +1,4 @@
-import picamera
+import picamera2
 import asyncio
 import RPi.GPIO as GPIO
 import os

@@ -1,4 +1,4 @@
-import picamera
+import picamera2
 import RPi.GPIO as GPIO
 import time
 import board
