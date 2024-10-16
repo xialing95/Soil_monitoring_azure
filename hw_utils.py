@@ -1,9 +1,9 @@
 import picamera2
 import RPi.GPIO as GPIO
 import time
-# import board
-# import busio
-# from adafruit_seesaw.seesaw import Seesaw
+import board
+import busio
+from adafruit_seesaw.seesaw import Seesaw
 import json
 import subprocess
 import signal
@@ -94,15 +94,15 @@ class Holocam:
 #         self.
 
 
-# def soil_sensor_init():
-#     i2c_bus = board.I2C()
-#     global soilsensor
-#     try:
-#         soilsensor = Seesaw(i2c_bus, addr = 0x36)
-#     except ValueError as err:
-#         print(err)
-#         print("Please connect the I2C Device")
-#     return      
+def soil_sensor_init():
+    i2c_bus = board.I2C()
+    global soilsensor
+    try:
+        soilsensor = Seesaw(i2c_bus, addr = 0x36)
+    except ValueError as err:
+        print(err)
+        print("Please connect the I2C Device")
+    return      
 
 def shutdown_callback(channel):
     print("Shutdown Started")
