@@ -16,7 +16,7 @@ APP_STATIC = os.path.join(APP_ROOT, 'static')
 
 # init hardware setup
 # hw_utils.light_init()
-hw_utils.soil_sensor_init()
+# hw_utils.soil_sensor_init()
 
 # create SoilState file if not exist 
 if not os.path.exists(APP_STATIC + '/SoilState.txt'):
