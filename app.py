@@ -12,7 +12,7 @@ from hw_utils import Holocam, soil_sensor_init, shutdown_bnt, soilsensor
 import utils
 import asyncio
 import RPi.GPIO as GPIO
-import azure_utils
+# import azure_utils
 import display_utils
 
 app = Flask(__name__)
@@ -127,7 +127,7 @@ def start_time_lapse():
     display.text("Time Lapse Done", 3)
 
     #upload txt file to azure blob
-    asyncio.run(azure_utils.upload_to_azure_blob("SoilState.txt"))
+    # asyncio.run(azure_utils.upload_to_azure_blob("SoilState.txt"))
     
     #update flask UI 
     templateData ={

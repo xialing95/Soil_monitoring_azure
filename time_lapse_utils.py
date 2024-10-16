@@ -7,7 +7,7 @@ from flask import Flask, render_template, Response, request, send_file, jsonify
 
 # import custom library
 import utils
-import azure_utils
+# import azure_utils
 import hw_utils
 
 # set file directory
@@ -75,35 +75,35 @@ async def time_lapse(HolocamObj, TotalFrames, Interval, NAME):
     # finish running time lapse camera state is true
     return utils.write_boolean_to_file(APP_STATIC + '/CameraState.txt', True)
 
-async def upload_to_azure():
-    # if the log is empty && camera state is true (done with Timelapse) then exit
-    while True:
-        logSize = os.stat(APP_STATIC +'/log.txt').st_size
-        cameraState = utils.read_boolean_from_file(APP_STATIC + '/CameraState.txt')
-        if cameraState and logSize == 0:
-            print("Done Uploading")
-            break
-        # if log is empty and time-lapse is not done (wait 1 second)
-        elif not cameraState and logSize == 0:
-            print("Waiting for picture")
-            await asyncio.sleep(1)
-        # else upload file to azure
-        else:
-            try:
-                log_f = open(APP_STATIC + '/log.txt', 'r+')               
-                #await asyncio.sleep(1)
-                ImageList = log_f.readlines()
-                filename = ImageList[0].strip('\n')
+# async def upload_to_azure():
+#     # if the log is empty && camera state is true (done with Timelapse) then exit
+#     while True:
+#         logSize = os.stat(APP_STATIC +'/log.txt').st_size
+#         cameraState = utils.read_boolean_from_file(APP_STATIC + '/CameraState.txt')
+#         if cameraState and logSize == 0:
+#             print("Done Uploading")
+#             break
+#         # if log is empty and time-lapse is not done (wait 1 second)
+#         elif not cameraState and logSize == 0:
+#             print("Waiting for picture")
+#             await asyncio.sleep(1)
+#         # else upload file to azure
+#         else:
+#             try:
+#                 log_f = open(APP_STATIC + '/log.txt', 'r+')               
+#                 #await asyncio.sleep(1)
+#                 ImageList = log_f.readlines()
+#                 filename = ImageList[0].strip('\n')
 
-                await azure_utils.upload_to_azure_blob(filename)
+#                 await azure_utils.upload_to_azure_blob(filename)
                 
-                log_f.seek(0)
-                log_f.truncate()
-                log_f.writelines(ImageList[1:])
-                log_f.close()
-            except:
-                 print("Time-lapse still going, but empty file")
-    return 
+#                 log_f.seek(0)
+#                 log_f.truncate()
+#                 log_f.writelines(ImageList[1:])
+#                 log_f.close()
+#             except:
+#                  print("Time-lapse still going, but empty file")
+#     return 
 
 async def run(HolocamObj, TotalFrames, Interval, NAME):
     await asyncio.gather(

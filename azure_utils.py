@@ -3,8 +3,8 @@ import asyncio
 import aiohttp
 from azure.storage.blob.aio import BlobClient
 
-connection_string = "DefaultEndpointsProtocol=https;AccountName=soilsamples;AccountKey=Q4mp30h+EtmMzNxZosJEvKaQCpaKG+Y3MF/fITKSwnsTG8Z2/8DbaCnjWwPvDO/tU+zN8VCtTsas+AStNTlxgA==;EndpointSuffix=core.windows.net"
-container_name = "soilsensor1"
+connection_string = ""
+container_name = ""
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
 APP_STATIC = os.path.join(APP_ROOT, 'static')
