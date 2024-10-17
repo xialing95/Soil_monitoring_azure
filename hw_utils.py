@@ -36,7 +36,7 @@ class Holocam:
         self.laser_on
         
         try:
-            self.camera = picamera.PiCamera()
+            self.camera = picamera2.PiCamera()
         except Exception as e:
             self.camera_close()
             print(e)
