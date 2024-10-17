@@ -101,7 +101,7 @@ def camera_setting():
     holocam.capture('static/preview.jpg')
     # close camera after time lapse to avoid out of resources error
     holocam.camera_close()
-    display.text("Camera set", 1)
+    # display.text("Camera set", 1)
     return render_template('index.html', **CAMERASETTING)
 
 @app.route('/start', methods = ['POST', 'GET'])

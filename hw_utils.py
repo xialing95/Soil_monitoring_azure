@@ -36,7 +36,7 @@ class Holocam:
         self.laser_on
         
         try:
-            self.camera = Picamera2
+            self.camera = Picamera2()
         except Exception as e:
             self.camera_close()
             print(e)
@@ -62,7 +62,7 @@ class Holocam:
     
     # camera capture    
     def camera_capture(self, path):
-        self.camera.capture(path)
+        self.camera.capture_file(path)
     
     # Holographic image capture    
     def capture(self, path):
