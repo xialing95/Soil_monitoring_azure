@@ -1,4 +1,4 @@
-import picamera2
+import picamera2 import Picamera2, Preview
 import RPi.GPIO as GPIO
 import time
 # import board
@@ -36,7 +36,7 @@ class Holocam:
         self.laser_on
         
         try:
-            self.camera = picamera2.PiCamera()
+            self.camera = Picamera2
         except Exception as e:
             self.camera_close()
             print(e)
