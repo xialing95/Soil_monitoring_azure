@@ -69,7 +69,9 @@ class Holocam:
         self.laser_on()
         
         try:
-            self.camera_capture(path)
+            r = self.camera_capture()
+            r.save("main", f"image{i}.jpg")
+            r.release()
         except Exception as e:
             self.camera_close()
             self.camera_init()
