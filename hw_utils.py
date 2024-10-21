@@ -61,11 +61,6 @@ class Holocam:
             print("Invalid Camera Setting") 
 
     def preview(self):
-        preview_config = self.camera.create_preview_configuration(main={"size": (800, 600)})
-        self.camera.configure(preview_config)
-
-        self.camera.start_preview(Preview.QTGL)
-
         self.camera.start()
         print("captured image")
         time.sleep(2)
