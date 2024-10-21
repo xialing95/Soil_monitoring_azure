@@ -147,7 +147,8 @@ def start_time_lapse():
 @app.route('/image_preview')
 def image_preview():
     def generate():
-        newest = max(glob.iglob('static/*.jpg'), key = os.path.getctime)
+        # newest = max(glob.iglob('static/*.jpg'), key = os.path.getctime)
+        newest = 'static/preview.jpg'
         #print(newest)
         yield (b'--frame\r\n' 
           b'Content-Type: image/jpeg\r\n\r\n' + open(newest, 'rb').read() + b'\r\n')
