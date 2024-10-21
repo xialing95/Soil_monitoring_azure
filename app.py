@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from importlib import import_module
+from picamera2 import Picamera2, Preview
 import datetime
 import time
 import subprocess
@@ -99,11 +100,26 @@ def camera_setting():
     
     holocam = Holocam()
     # holocam.capture('static/preview.jpg')
-    holocam.preview()
+    preview()
     # close camera after time lapse to avoid out of resources error
     holocam.camera_close()
     # display.text("Camera set", 1)
     return render_template('index.html', **CAMERASETTING)
+
+def preview():
+    picam2 = Picamera2()
+
+    preview_config = picam2.create_preview_configuration(main={"size": (800, 600)})
+    picam2.configure(preview_config)
+
+    picam2.start_preview(Preview.QTGL)
+
+    picam2.start()
+    time.sleep(2)
+
+    metadata = picam2.capture_file("test.jpg")
+    print(metadata)
+    picam2.close()
 
 @app.route('/start', methods = ['POST', 'GET'])
 def start_time_lapse():
