@@ -10,6 +10,7 @@ from flask import Flask, render_template, Response, request, json, jsonify
 
 import time_lapse_utils
 from hw_utils import Holocam
+from camera_test import preview
 # from hw_utils soil_sensor_init, soilsensor
 # from hw_utils shutdown_bnt
 import utils
@@ -98,28 +99,13 @@ def camera_setting():
     with open("CAMERASETTING.json", "w") as file:
         json.dump(CAMERASETTING, file)
     
-    holocam = Holocam()
+    # holocam = Holocam()
     # holocam.capture('static/preview.jpg')
     preview()
     # close camera after time lapse to avoid out of resources error
-    holocam.camera_close()
+    # holocam.camera_close()
     # display.text("Camera set", 1)
     return render_template('index.html', **CAMERASETTING)
-
-def preview():
-    picam2 = Picamera2()
-
-    preview_config = picam2.create_preview_configuration(main={"size": (800, 600)})
-    picam2.configure(preview_config)
-
-    picam2.start_preview(Preview.QTGL)
-
-    picam2.start()
-    time.sleep(2)
-
-    metadata = picam2.capture_file("test.jpg")
-    print(metadata)
-    picam2.close()
 
 @app.route('/start', methods = ['POST', 'GET'])
 def start_time_lapse():
