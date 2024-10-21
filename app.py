@@ -161,16 +161,16 @@ def start_time_lapse():
     
     return render_template('index.html', **templateData)
     
-# @app.route('/image_preview')
-# def image_preview():
-#     def generate():
-#         # newest = max(glob.iglob('static/*.jpg'), key = os.path.getctime)
-#         newest = 'static/preview.jpg'
-#         #print(newest)
-#         yield (b'--frame\r\n' 
-#           b'Content-Type: image/jpeg\r\n\r\n' + open(newest, 'rb').read() + b'\r\n')
-#     return Response(generate(), 
-#                    mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/image_preview')
+def image_preview():
+    def generate():
+        # newest = max(glob.iglob('static/*.jpg'), key = os.path.getctime)
+        newest = 'static/preview.jpg'
+        #print(newest)
+        yield (b'--frame\r\n' 
+          b'Content-Type: image/jpeg\r\n\r\n' + open(newest, 'rb').read() + b'\r\n')
+    return Response(generate(), 
+                   mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=True)
