@@ -63,15 +63,15 @@ class Holocam:
     # camera capture    
     def camera_capture(self, path):
         self.camera.capture_file(path)
+        # r.save("main", f"image{i}.jpg")
+        # r.release()
     
     # Holographic image capture    
     def capture(self, path):
         self.laser_on()
         
         try:
-            r = self.camera_capture()
-            r.save("main", f"image{i}.jpg")
-            r.release()
+            self.camera_capture(path)
         except Exception as e:
             self.camera_close()
             self.camera_init()
