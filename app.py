@@ -98,7 +98,8 @@ def camera_setting():
         json.dump(CAMERASETTING, file)
     
     holocam = Holocam()
-    holocam.capture('static/preview.jpg')
+    # holocam.capture('static/preview.jpg')
+    holocam.preview()
     # close camera after time lapse to avoid out of resources error
     holocam.camera_close()
     # display.text("Camera set", 1)

@@ -59,6 +59,23 @@ class Holocam:
         except SyntaxError as err:
             print (err)
             print("Invalid Camera Setting") 
+
+    def preview(self):
+        preview_config = self.create_preview_configuration(main={"size": (800, 600)})
+        self.configure(preview_config)
+
+        self.start_preview(Preview.QTGL)
+
+        self.start()
+        print("captured image")
+        time.sleep(2)
+
+        metadata = self.capture_file("test.jpg")
+        print("saved image")
+        print(metadata)
+
+        self.close()
+        
     
     # camera capture    
     def camera_capture(self, path):
