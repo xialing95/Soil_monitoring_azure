@@ -94,7 +94,7 @@ async def time_lapse(TotalFrames, Interval, NAME):
             update_log(imageName) 
 
             # Capture the image in a separate thread
-            await asyncio.to_thread(capture_image, camera, path)
+            capture_image(camera, path)
             await asyncio.sleep(Interval)  # Wait for the specified interval between captures
     finally:
         camera.stop()
