@@ -8,12 +8,12 @@ import os
 import glob
 from flask import Flask, render_template, Response, request, json, jsonify
 
-import time_lapse_utils
+# import time_lapse_utils
 from hw_utils import Holocam
-from camera_test import preview
+from camera_test import preview, time_lapse
 # from hw_utils soil_sensor_init, soilsensor
 # from hw_utils shutdown_bnt
-import utils
+import file_utils
 import asyncio
 import RPi.GPIO as GPIO
 # import azure_utils
@@ -110,7 +110,7 @@ def camera_setting():
 @app.route('/start', methods = ['POST', 'GET'])
 def start_time_lapse():
     #hw_utils.camera_init()
-    holocam = Holocam()
+    # holocam = Holocam()
     
     #set this to the number of minutes you wish to run your timelapse camera
     tlminutes = float(request.form.get('duration'))
@@ -121,7 +121,7 @@ def start_time_lapse():
     #number of photos to take
     numphotos = int((tlminutes*60)/secondsinterval) 
     print("number of photos to take = ", numphotos)
-    display.text(str("# of photos: "+ str(numphotos)), 2)
+    # display.text(str("# of photos: "+ str(numphotos)), 2)
     
     #Record time started for Flask UI
     dateraw= datetime.datetime.now()
@@ -129,11 +129,12 @@ def start_time_lapse():
     
     #Start time-lapse
     s = time.perf_counter()
-    display.text("Time Lapse On", 3)
-    asyncio.run(time_lapse_utils.run(holocam, numphotos, secondsinterval, filename))
+    # display.text("Time Lapse On", 3)
+    # asyncio.run(time_lapse_utils.run(holocam, numphotos, secondsinterval, filename))
+    asynico.run(time_lapse(numphotos, secondsinterval, filename))
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
-    display.text("Time Lapse Done", 3)
+    # display.text("Time Lapse Done", 3)
 
     #upload txt file to azure blob
     # asyncio.run(azure_utils.upload_to_azure_blob("SoilState.txt"))
