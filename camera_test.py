@@ -32,9 +32,9 @@ def preview():
 
     picam2.close()
 
-async def capture_image(camera, imageName):
-    camera.capture(imageName)
-    print(f"Captured image: {imageName}")
+def capture_image(camera, path):
+    camera.capture_file(path)
+    print(f"Captured image: {path}")
 
 async def time_lapse(TotalFrames, Interval, NAME):
     # start camera & set camera state as false when time lapse is running
@@ -47,16 +47,15 @@ async def time_lapse(TotalFrames, Interval, NAME):
 
     try:
         for i in range(TotalFrames):
-            # image_name = f"image_{i}.jpg"
-            print(i)
             # get the time to create the name of the file
             timestr = time.strftime("%H%M%S", time.localtime())
             imageName = timestr + NAME
+            print(imageName)
             path = os.path.join(APP_STATIC, imageName)
             update_log(imageName)
 
-            capture_image(camera, imageName)  # Now awaiting the async function
-            await asyncio.sleep(Interval)  # Wait for 1 second between captures
+            capture_image(camera, path)  # Now awaiting the async function
+            await asyncio.sleep(Interval)  # Wait for the interval second between captures
     finally:
         camera.stop()
         
