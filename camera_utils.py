@@ -5,9 +5,8 @@ import file_utils
 import threading
 import numpy as np
 
-from picamera2 import Picamera2, Preview
+from picamera2 import Picamera2
 from picamera2.encoders import H264Encoder, Quality
-from picamera2.outputs.fileoutput import FileOutput
 
 # set file directory
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
@@ -57,7 +56,7 @@ def capture_timelapse(interval, duration, NAME):
         # Save raw image data
         raw_buffer = request.make_buffer("raw")
         raw_data = np.frombuffer(raw_buffer, dtype=np.uint16)
-        np.save(imageName, raw_data)
+        np.save(path, raw_data)
 
         request.release()  # Release the request
         time.sleep(interval)  # Wait for the specified interval
