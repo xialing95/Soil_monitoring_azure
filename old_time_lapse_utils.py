@@ -8,7 +8,7 @@ from flask import Flask, render_template, Response, request, send_file, jsonify
 # import custom library
 import file_utils
 # import azure_utils
-import hw_utils
+import old_hw_utils
 
 # set file directory
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top

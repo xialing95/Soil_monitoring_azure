@@ -32,43 +32,6 @@ def preview():
 
     picam2.close()
 
-# def capture_image(camera, path):
-#     camera.capture_file(path)
-#     print(f"Captured image: {path}")
-
-# async def time_lapse(TotalFrames, Interval, NAME):
-#     # start camera & set camera state as false when time lapse is running
-#     file_utils.write_boolean_to_file(APP_STATIC + '/CameraState.txt', False)
-    
-#     camera = Picamera2()
-#     camera.configure(camera.create_still_configuration())
-#     camera.start()
-#     print("camera started")
-
-#     try:
-#         for i in range(TotalFrames):
-#             # get the time to create the name of the file
-#             timestr = time.strftime("%H%M%S", time.localtime())
-#             imageName = timestr + NAME
-#             print(imageName)
-#             path = os.path.join(APP_STATIC, imageName)
-#             update_log(imageName)
-
-#             capture_image(camera, path)  # Now awaiting the async function
-#             await asyncio.sleep(Interval)  # Wait for the interval second between captures
-#     finally:
-#         camera.stop()
-        
-#     # finish running time lapse camera state is true
-#     return file_utils.write_boolean_to_file(APP_STATIC + '/CameraState.txt', True)
-
-# async def run(TotalFrames, Interval, NAME):
-#     await asyncio.gather(
-#         asyncio.create_task(time_lapse(TotalFrames, Interval, NAME)),
-#         # asyncio.create_task(upload_to_azure())
-#     )
-#     return
-
 def capture_image(camera, path):
     """Capture an image and save it to the specified path."""
     camera.capture_file(path)
@@ -80,7 +43,7 @@ async def time_lapse(TotalFrames, Interval, NAME):
     file_utils.write_boolean_to_file(os.path.join(APP_STATIC, 'CameraState.txt'), False)
     
     camera = Picamera2()
-    capture_config = camera.create_still_configuration()
+    capture_config = camera.create_still_configuration(raw={}, display=None)
     print("Camera started")
     camera.start()
 
@@ -93,24 +56,22 @@ async def time_lapse(TotalFrames, Interval, NAME):
     try:
         for i in range(TotalFrames):
             # Get the current time to create the name of the file
-            timestr = time.strftime("%H%M%S", time.localtime())
-            imageName = f"{timestr}_{NAME}.jpg"  # Ensure a .jpg extension
+            timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
+            imageName = f"{timestr}_{NAME}" 
             print(imageName)
             path = os.path.join(APP_STATIC, imageName)
             update_log(imageName) 
 
-            camera.switch_mode_and_capture_file(capture_config, path)
-
-            # Capture the image in a separate thread
-            # capture_image(camera, path)
-            # r = camera.capture_request()
-            # r.save("main", f"image{i}.jpg")
-            # r.release()
+            r = camera.switch_mode_capture_request_and_stop(capture_config)
+            r.save ("main", "newest.jpg")
+            r.save_dng(f"{path}.dng")
             await asyncio.sleep(Interval)  # Wait for the specified interval between captures
     finally:
         camera.stop()
+        print("Done TimeLapse")
         
-    # Finish running time lapse, camera state is true    file_utils.write_boolean_to_file(os.path.join(APP_STATIC, 'CameraState.txt'), True)
+        # Finish running time lapse, camera state is true
+        file_utils.write_boolean_to_file(os.path.join(APP_STATIC, 'CameraState.txt'), True)
 
 async def run(TotalFrames, Interval, NAME):
     """Run the time-lapse and any other tasks concurrently."""
