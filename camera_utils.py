@@ -136,7 +136,7 @@ def capture_timelapse(interval, duration, NAME):
         # Capture both DNG and JPG images
         request = picam2.capture_request()
         request.save("main", 'newest.jpg')
-        print(f"image #{i}, file name: {imageName}")
+        print(f"file name: {imageName}")
                 
         # Save raw image data
         raw_buffer = request.make_buffer("raw")
