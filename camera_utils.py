@@ -85,36 +85,70 @@ def capture_image(camera, path):
 #         # asyncio.create_task(upload_to_azure())  # Uncomment if you have this function
 #     )
 
-def time_lapse(TotalFrames, Interval, NAME):
-    camera = Picamera2()
-    capture_config = camera.create_still_configuration(raw={}, display=None)
-    print("Camera started")
-    camera.start()
+# def time_lapse(TotalFrames, Interval, NAME):
+#     camera = Picamera2()
+#     capture_config = camera.create_still_configuration(raw={}, display=None)
+#     print("Camera started")
+#     camera.start()
 
-    # Give time for Aec and Awb to settle, before disabling them
-    time.sleep(1)
-    camera.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1.0})
-    # And wait for those settings to take effect
-    time.sleep(1)
+#     # Give time for Aec and Awb to settle, before disabling them
+#     time.sleep(1)
+#     camera.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1.0})
+#     # And wait for those settings to take effect
+#     time.sleep(1)
 
-    try:
-        for i in range(TotalFrames):
-            # Get the current time to create the name of the file
-            timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
-            imageName = f"{timestr}_{NAME}" 
-            path = os.path.join(APP_STATIC, imageName)
-            # update_log(imageName) 
-            print(f"image #{i}, file name: {imageName}")
+#     try:
+#         for i in range(TotalFrames):
+#             # Get the current time to create the name of the file
+#             timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
+#             imageName = f"{timestr}_{NAME}" 
+#             path = os.path.join(APP_STATIC, imageName)
+#             # update_log(imageName) 
+#             print(f"image #{i}, file name: {imageName}")
         
-            try:
-                r = camera.switch_mode_capture_request_and_stop(capture_config)
-                r.save ("main", "newest.jpg")
-                r.save_dng(f"{path}.dng")
-            except asyncio.TimeoutError:
-                print("Camera capture request timed out")
-            except Exception as e:
-                print (f"Error during capture: {e}")
-            time.sleep(Interval)  # Wait for the specified interval between captures
-    finally:
-        camera.stop()
-        print("Done TimeLapse")
+#             try:
+#                 r = camera.switch_mode_capture_request_and_stop(capture_config)
+#                 r.save ("main", "newest.jpg")
+#                 r.save_dng("newest.dng")
+#             except Exception as e:
+#                 print (f"Error during capture: {e}")
+#             time.sleep(5)  # Wait for the specified interval between captures
+#     finally:
+#         camera.stop()
+#         print("Done TimeLapse")
+
+import threading
+
+# Function to capture images
+def capture_timelapse(interval, duration):
+    picam2 = Picamera2()
+    picam2.start()  # Start the camera
+
+    end_time = time.time() + duration
+    while time.time() < end_time:
+        # Capture both DNG and JPG images
+        request = picam2.capture_request()
+        request.save("main", f'timelapse_{int(time.time())}.jpg')
+        request.save("raw", f'timelapse_{int(time.time())}.dng')
+        request.release()  # Release the request
+        time.sleep(interval)  # Wait for the specified interval
+
+    picam2.stop()  # Stop the camera
+
+# Main function
+def time_lapse(inputDuration, inputInterval):
+    interval = inputInterval  # Interval in seconds between captures
+    duration = inputDuration  # Total duration of the timelapse in seconds
+
+    # Start the capture in a separate thread
+    timelapse_thread = threading.Thread(target=capture_timelapse, args=(interval, duration))
+    timelapse_thread.start()
+
+    # Main program can continue doing other things here
+    print("Timelapse is running in the background...")
+
+    # Optionally, wait for the thread to finish
+    timelapse_thread.join()
+    print("Timelapse capture completed.")
+
+
