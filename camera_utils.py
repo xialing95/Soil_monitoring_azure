@@ -131,7 +131,6 @@ def capture_timelapse(interval, duration, NAME):
         timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
         imageName = f"{timestr}_{NAME}" 
         path = os.path.join(APP_STATIC, imageName)
-        # update_log(imageName) 
 
         # Capture both DNG and JPG images
         request = picam2.capture_request()
