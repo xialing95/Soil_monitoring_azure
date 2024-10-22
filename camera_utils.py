@@ -58,9 +58,9 @@ async def time_lapse(TotalFrames, Interval, NAME):
             # Get the current time to create the name of the file
             timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
             imageName = f"{timestr}_{NAME}" 
-            print(imageName)
             path = os.path.join(APP_STATIC, imageName)
             update_log(imageName) 
+            print(f"image #{i}, file name: {imageName}")
 
             r = camera.switch_mode_capture_request_and_stop(capture_config)
             r.save ("main", "newest.jpg")
