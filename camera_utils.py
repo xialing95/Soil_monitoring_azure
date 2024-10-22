@@ -61,10 +61,15 @@ async def time_lapse(TotalFrames, Interval, NAME):
             path = os.path.join(APP_STATIC, imageName)
             update_log(imageName) 
             print(f"image #{i}, file name: {imageName}")
-
-            r = camera.switch_mode_capture_request_and_stop(capture_config)
-            r.save ("main", "newest.jpg")
-            r.save_dng(f"{path}.dng")
+        
+            try:
+                r = camera.switch_mode_capture_request_and_stop(capture_config)
+                r.save ("main", "newest.jpg")
+                r.save_dng(f"{path}.dng")
+            # except asyncio.TimeoutError:
+            #     print("Camera capture request timed out")
+            except Exception as e:
+                print (f"Error during capture: {e}")
             await asyncio.sleep(Interval)  # Wait for the specified interval between captures
     finally:
         camera.stop()
