@@ -23,6 +23,19 @@ def update_log(filename: str):
     log_f.close()
     return
 
+def preview():
+    picam2 = Picamera2()
+    picam2.start()
+
+    metadata = picam2.capture_file("static/preview.jpg")
+    print(metadata)
+
+    picam2.close()
+
+async def capture_image(camera, imageName):
+    await asyncio.to_thread(camera.capture, image_name)
+    print(f"Captured image: {imageName}")
+
 async def time_lapse(TotalFrames, Interval, NAME):
     # start camera & set camera state as false when time lapse is running
     file_utils.write_boolean_to_file(APP_STATIC + '/CameraState.txt', False)
@@ -30,18 +43,19 @@ async def time_lapse(TotalFrames, Interval, NAME):
     camera = Picamera2()
     camera.configure(camera.create_still_configuration())
     camera.start()
+    print("camera started")
 
     try:
         for i in range(TotalFrames):
             # image_name = f"image_{i}.jpg"
-
+            print(i)
             # get the time to create the name of the file
             timestr = time.strftime("%H%M%S", time.localtime())
             imageName = timestr + NAME
             path = os.path.join(APP_STATIC, imageName)
             update_log(imageName)
 
-            await asyncio.to_thread(capture_image, camera, imageName)
+            await capture_image(camera, imageName)  # Now awaiting the async function
             await asyncio.sleep(Interval)  # Wait for 1 second between captures
     finally:
         camera.stop()
@@ -55,16 +69,3 @@ async def run(TotalFrames, Interval, NAME):
         # asyncio.create_task(upload_to_azure())
     )
     return
-
-async def capture_image(camera, image_name):
-    camera.capture(image_name)
-    print(f"Captured image: {image_name}")
-
-def preview():
-    picam2 = Picamera2()
-    picam2.start()
-
-    metadata = picam2.capture_file("static/preview.jpg")
-    print(metadata)
-
-    picam2.close()
