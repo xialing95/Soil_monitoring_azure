@@ -99,7 +99,8 @@ def start_time_lapse():
     
     #Start time-lapse
     s = time.perf_counter()
-    asyncio.run(time_lapse(numphotos, secondsinterval, filename))
+    # asyncio.run(time_lapse(numphotos, secondsinterval, filename))
+    time_lapse(numphotos, secondsinterval, filename)
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
     
