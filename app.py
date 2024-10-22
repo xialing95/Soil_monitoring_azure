@@ -131,7 +131,7 @@ def start_time_lapse():
     s = time.perf_counter()
     # display.text("Time Lapse On", 3)
     # asyncio.run(time_lapse_utils.run(holocam, numphotos, secondsinterval, filename))
-    asynico.run(time_lapse(numphotos, secondsinterval, filename))
+    asyncio.run(time_lapse(numphotos, secondsinterval, filename))
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
     # display.text("Time Lapse Done", 3)
