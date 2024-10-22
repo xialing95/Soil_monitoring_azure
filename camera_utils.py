@@ -118,6 +118,8 @@ def capture_image(camera, path):
 #         print("Done TimeLapse")
 
 import threading
+import numpy as np
+
 
 # Function to capture images
 def capture_timelapse(interval, duration):
@@ -129,7 +131,12 @@ def capture_timelapse(interval, duration):
         # Capture both DNG and JPG images
         request = picam2.capture_request()
         request.save("main", f'timelapse_{int(time.time())}.jpg')
-        request.save("raw", f'timelapse_{int(time.time())}.dng')
+        
+        # Save raw image data
+        raw_buffer = request.make_buffer("raw")
+        raw_data = np.frombuffer(raw_buffer, dtype=np.uint16)
+        np.save(f'timelapse_{int(time.time())}.raw', raw_data)
+
         request.release()  # Release the request
         time.sleep(interval)  # Wait for the specified interval
 
