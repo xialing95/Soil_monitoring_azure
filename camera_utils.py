@@ -120,22 +120,28 @@ def capture_image(camera, path):
 import threading
 import numpy as np
 
-
 # Function to capture images
-def capture_timelapse(interval, duration):
+def capture_timelapse(interval, duration, NAME):
     picam2 = Picamera2()
     picam2.start()  # Start the camera
 
     end_time = time.time() + duration
     while time.time() < end_time:
+        # Get the current time to create the name of the file
+        timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
+        imageName = f"{timestr}_{NAME}" 
+        path = os.path.join(APP_STATIC, imageName)
+        # update_log(imageName) 
+
         # Capture both DNG and JPG images
         request = picam2.capture_request()
-        request.save("main", f'timelapse_{int(time.time())}.jpg')
-        
+        request.save("main", 'newest.jpg')
+        print(f"image #{i}, file name: {imageName}")
+                
         # Save raw image data
         raw_buffer = request.make_buffer("raw")
         raw_data = np.frombuffer(raw_buffer, dtype=np.uint16)
-        np.save(f'timelapse_{int(time.time())}.raw', raw_data)
+        np.save(imageName, raw_data)
 
         request.release()  # Release the request
         time.sleep(interval)  # Wait for the specified interval
@@ -143,12 +149,12 @@ def capture_timelapse(interval, duration):
     picam2.stop()  # Stop the camera
 
 # Main function
-def time_lapse(inputDuration, inputInterval):
+def time_lapse(inputDuration, inputInterval, NAME):
     interval = inputInterval  # Interval in seconds between captures
     duration = inputDuration  # Total duration of the timelapse in seconds
 
     # Start the capture in a separate thread
-    timelapse_thread = threading.Thread(target=capture_timelapse, args=(interval, duration))
+    timelapse_thread = threading.Thread(target=capture_timelapse, args=(interval, duration, NAME))
     timelapse_thread.start()
 
     # Main program can continue doing other things here
