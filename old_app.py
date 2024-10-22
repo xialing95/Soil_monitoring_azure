@@ -9,8 +9,8 @@ import glob
 from flask import Flask, render_template, Response, request, json, jsonify
 
 # import time_lapse_utils
-from hw_utils import Holocam
-from camera_test import preview, time_lapse
+from old_hw_utils import Holocam
+from camera_utils import preview, time_lapse
 # from hw_utils soil_sensor_init, soilsensor
 # from hw_utils shutdown_bnt
 import file_utils

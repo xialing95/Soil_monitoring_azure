@@ -96,14 +96,6 @@ def start_time_lapse():
     #Record time started for Flask UI
     dateraw= datetime.datetime.now()
     datetimeformat = dateraw.strftime("%m-%d_%H:%M")
-
-    #update flask UI 
-    templateData ={
-        'startTime' : datetimeformat,
-        'numphotos' : numphotos
-        }
-
-    render_template('index.html', **templateData)
     
     #Start time-lapse
     s = time.perf_counter()
@@ -114,6 +106,8 @@ def start_time_lapse():
     #update flask UI 
     templateData ={
         'elapseTime' : elapsed,
+        'startTime' : datetimeformat,
+        'numphotos' : numphotos
         }
     
     return render_template('index.html', **templateData)
