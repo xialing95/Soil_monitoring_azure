@@ -33,7 +33,7 @@ def preview():
     picam2.close()
 
 async def capture_image(camera, imageName):
-    await asyncio.to_thread(camera.capture, image_name)
+    camera.capture(imageName)
     print(f"Captured image: {imageName}")
 
 async def time_lapse(TotalFrames, Interval, NAME):
@@ -55,7 +55,7 @@ async def time_lapse(TotalFrames, Interval, NAME):
             path = os.path.join(APP_STATIC, imageName)
             update_log(imageName)
 
-            await capture_image(camera, imageName)  # Now awaiting the async function
+            capture_image(camera, imageName)  # Now awaiting the async function
             await asyncio.sleep(Interval)  # Wait for 1 second between captures
     finally:
         camera.stop()
