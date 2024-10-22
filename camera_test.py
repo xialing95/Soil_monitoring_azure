@@ -81,11 +81,11 @@ async def time_lapse(TotalFrames, Interval, NAME):
     
     camera = Picamera2()
     camera.configure(camera.create_still_configuration())
-    camera.start()
     print("Camera started")
 
     try:
         for i in range(TotalFrames):
+            camera.start()
             # Get the current time to create the name of the file
             timestr = time.strftime("%H%M%S", time.localtime())
             imageName = f"{timestr}_{NAME}.jpg"  # Ensure a .jpg extension
@@ -95,8 +95,10 @@ async def time_lapse(TotalFrames, Interval, NAME):
 
             # Capture the image in a separate thread
             capture_image(camera, path)
+            camera.close()
             await asyncio.sleep(Interval)  # Wait for the specified interval between captures
     finally:
+        camera.close()
         camera.stop()
         
     # Finish running time lapse, camera state is true    file_utils.write_boolean_to_file(os.path.join(APP_STATIC, 'CameraState.txt'), True)
