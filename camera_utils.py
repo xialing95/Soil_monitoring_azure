@@ -129,7 +129,7 @@ def capture_timelapse(interval, duration, NAME):
     while time.time() < end_time:
         # Get the current time to create the name of the file
         timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
-        imageName = f"{timestr}_{NAME}" 
+        imageName = f"{timestr}-{NAME}" 
         path = os.path.join(APP_STATIC, imageName)
 
         # Capture both DNG and JPG images
