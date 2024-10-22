@@ -54,9 +54,11 @@ def capture_timelapse(interval, duration, NAME):
         print(f"file name: {imageName}")
                 
         # Save raw image data
-        raw_array = request.make_array("raw")
-        raw_data = np.save(path, raw_array)
-        np.save(path, raw_data)
+        # raw_array = request.make_array("raw")
+        # raw_data = np.save(path, raw_array)
+        # np.save(path, raw_data)
+
+        request.save_dng(path)
 
         request.release()  # Release the request
         time.sleep(interval)  # Wait for the specified interval
