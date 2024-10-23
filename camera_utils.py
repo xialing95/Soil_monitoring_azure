@@ -4,6 +4,7 @@ import time
 import file_utils
 import threading
 import numpy as np
+import RPi.GPIO as GPIO
 
 from picamera2 import Picamera2
 from picamera2.encoders import H264Encoder, Quality
@@ -16,6 +17,20 @@ APP_STATIC = os.path.join(APP_ROOT, 'static')
 camera_config = open(APP_STATIC + '/CameraState.txt', 'w')
 camera_config.close()
 
+def laser_on(LASER_PIN = 4): #GPIO4, pin 7
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    GPIO.setup(LASER_PIN, GPIO.OUT)
+    GPIO.output(LASER_PIN, True)
+    return
+
+def laser_off(LASER_PIN = 4):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    GPIO.setup(LASER_PIN, GPIO.OUT)
+    GPIO.output(LASER_PIN, False)
+    return
+
 def update_log(filename: str):
     log_f = open(APP_STATIC + '/log.txt', 'a')
     log_f.write(filename + "\n")
@@ -23,6 +38,8 @@ def update_log(filename: str):
     return
 
 def preview():
+    laser_on()
+    time.sleep(1)
     picam2 = Picamera2()
     picam2.start()
 
@@ -30,6 +47,7 @@ def preview():
     print(metadata)
 
     picam2.close()
+    laser_off()
 
 def capture_image(camera, path):
     """Capture an image and save it to the specified path."""
@@ -43,6 +61,9 @@ def capture_timelapse(interval, duration, NAME):
 
     end_time = time.time() + duration
     while time.time() < end_time:
+        #turn laser on
+        laser_on()
+
         # Get the current time to create the name of the file
         timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
         imageName = f"{timestr}-{NAME}" 
@@ -64,6 +85,7 @@ def capture_timelapse(interval, duration, NAME):
         time.sleep(interval)  # Wait for the specified interval
 
     picam2.stop()  # Stop the camera
+    laser_off()
 
 # Main function
 def time_lapse(inputDuration, inputInterval, NAME):
