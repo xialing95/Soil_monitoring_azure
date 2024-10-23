@@ -22,6 +22,7 @@ def laser_on(LASER_PIN = 4): #GPIO4, pin 7
     GPIO.setwarnings(False)
     GPIO.setup(LASER_PIN, GPIO.OUT)
     GPIO.output(LASER_PIN, True)
+    print("Laser ON")
     return
 
 def laser_off(LASER_PIN = 4):
@@ -29,6 +30,7 @@ def laser_off(LASER_PIN = 4):
     GPIO.setwarnings(False)
     GPIO.setup(LASER_PIN, GPIO.OUT)
     GPIO.output(LASER_PIN, False)
+    print("Laser OFF")
     return
 
 def update_log(filename: str):
@@ -39,7 +41,7 @@ def update_log(filename: str):
 
 def preview():
     laser_on()
-    time.sleep(1)
+    time.sleep(3)
     picam2 = Picamera2()
     picam2.start()
 
