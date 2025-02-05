@@ -1,6 +1,7 @@
 import time
 import os
 import time
+import json
 import file_utils
 import threading
 import numpy as np
@@ -43,6 +44,26 @@ def preview():
     laser_on()
     time.sleep(3)
     picam2 = Picamera2()
+
+    # Load camera settings from JSON file
+    with open('camera_config.json', 'r') as f:
+        config = json.load(f)
+
+    # Configure camera settings
+    picam2.configure(picam2.create_preview_configuration())
+    # Set camera resolution
+    picam2.set_controls({"Resolution": tuple(config["resolution"])})
+    # Set ISO
+    picam2.set_controls({"ISO": config["iso"]})
+    # Set shutter speed (in microseconds)
+    picam2.set_controls({"ExposureTime": config["expSpd"]})
+    # Set frame rate
+    picam2.set_controls({"FrameRate": config["framerate"]})
+    # Set AWB settings
+    if config["awbMod"] == "off":
+        picam2.set_controls({"AwbMode": "off", "AwbGain": config["awbGain"]})
+    
+    time.sleep(2)
     picam2.start()
 
     metadata = picam2.capture_file("static/preview.jpg")
