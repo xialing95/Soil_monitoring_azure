@@ -46,7 +46,7 @@ def preview():
     picam2 = Picamera2()
 
     # Load camera settings from JSON file
-    with open('camera_config.json', 'r') as f:
+    with open('CAMERASETTING.json', 'r') as f:
         config = json.load(f)
 
     # Configure camera settings
