@@ -54,12 +54,6 @@ def preview():
     
     picam2.start()
 
-    with picam2.controls as ctrl:
-    ctrl.AnalogueGain = 6.0
-    ctrl.ExposureTime = 60000
-
-    time.sleep(1)
-
     ctrls = Controls(picam2)
     ctrls.AnalogueGain = 1.0
     ctrls.ExposureTime = 10
