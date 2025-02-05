@@ -8,7 +8,7 @@ import numpy as np
 import RPi.GPIO as GPIO
 
 from picamera2 import Picamera2
-from picamera2.encoders import H264Encoder, Quality
+from picamera2.controls import Controls
 
 # set file directory
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
@@ -48,23 +48,23 @@ def preview():
     # Load camera settings from JSON file
     with open('CAMERASETTING.json', 'r') as f:
         config = json.load(f)
-
-    # Configure camera settings
-    picam2.configure(picam2.create_preview_configuration())
-    # Set camera resolution
-    # picam2.set_controls({"Resolution": tuple(config["resolution"])})
-    # Set ISO
-    picam2.set_controls({"ISO": config["iso"]})
-    # Set shutter speed (in microseconds)
-    picam2.set_controls({"ExposureTime": config["expSpd"]})
-    # Set frame rate
-    picam2.set_controls({"FrameRate": config["framerate"]})
-    # Set AWB settings
-    if config["awbMod"] == "off":
-        picam2.set_controls({"AwbMode": "off", "AwbGain": config["awbGain"]})
     
-    time.sleep(2)
+    preview_config = picam2.create_preview_configuration()
+    picam2.configure(preview_config)
+    
     picam2.start()
+
+    with picam2.controls as ctrl:
+    ctrl.AnalogueGain = 6.0
+    ctrl.ExposureTime = 60000
+
+    time.sleep(1)
+
+    ctrls = Controls(picam2)
+    ctrls.AnalogueGain = 1.0
+    ctrls.ExposureTime = 10
+    picam2.set_controls(ctrls)
+    time.sleep(1)
 
     metadata = picam2.capture_file("static/preview.jpg")
     print(metadata)
