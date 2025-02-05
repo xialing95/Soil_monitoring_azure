@@ -52,7 +52,7 @@ def preview():
     # Configure camera settings
     picam2.configure(picam2.create_preview_configuration())
     # Set camera resolution
-    picam2.set_controls({"Resolution": tuple(config["resolution"])})
+    # picam2.set_controls({"Resolution": tuple(config["resolution"])})
     # Set ISO
     picam2.set_controls({"ISO": config["iso"]})
     # Set shutter speed (in microseconds)
