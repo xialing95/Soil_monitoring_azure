@@ -9,7 +9,7 @@ from flask import Flask, render_template, Response, request, json, jsonify
 from camera_utils import preview, time_lapse
 import asyncio
 import RPi.GPIO as GPIO
-from bme68x_utils import get_bme680_data, start_env_logging_thread
+from bme68x_utils import get_single_data, start_env_logging_thread
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -17,14 +17,14 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     # setup the hardware sensor & checking on the status
-    sensor_data = get_bme680_data()
+    sensor_data = get_single_data()
     temp = sensor_data["temperature"] if sensor_data else "N/A"
     humidity = sensor_data["humidity"] if sensor_data else "N/A"
     pressure = sensor_data["pressure"] if sensor_data else "N/A"
 
     if request.method =='POST':
         if request.form['reset_i2c'] == 'Reset I2C':
-            sensor_data = get_bme680_data() 
+            sensor_data = get_single_data()
             temp = sensor_data["temperature"] if sensor_data else "N/A"
             humidity = sensor_data["humidity"] if sensor_data else "N/A"
             pressure = sensor_data["pressure"] if sensor_data else "N/A"

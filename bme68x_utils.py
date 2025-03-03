@@ -36,27 +36,33 @@ def initialize_bme680(max_retries=5, delay=2):
     for attempt in range(max_retries):
         try:
             sensor = bme680.BME680(bme680.I2C_ADDR_SECONDARY)
+            # Configure the sensor
+            sensor.set_humidity_oversample(bme680.OS_2X)
+            sensor.set_pressure_oversample(bme680.OS_4X)
+            sensor.set_temperature_oversample(bme680.OS_8X)
+            # sensor.set_filter(bme680.FILTER_SIZE_3)
+            # sensor.set_gas_heater_temperature(320)  # degrees Celsius
+            # sensor.set_gas_heater_duration(150)      # milliseconds
             print("BME680 sensor initialized successfully!")
             return sensor
+        
         except (RuntimeError, IOError) as e:
             print(f"Attempt {attempt + 1} of {max_retries}: Could not initialize BME680 sensor! Error: {e}")
             time.sleep(delay)  # Wait before retrying
     print("Failed to initialize BME680 sensor after multiple attempts.")
+
     return None
+
+def get_single_data():
+    sensor = initialize_bme680()
+    data = get_bme680_data(sensor)
+    return data
 
 def get_bme680_data(sensor):
     if sensor is None:
         # Handle the case where the sensor could not be initialized
         print("Exiting program due to sensor initialization failure.")
         exit(1)
-
-    # Configure the sensor
-    sensor.set_humidity_oversample(bme680.OS_2X)
-    sensor.set_pressure_oversample(bme680.OS_4X)
-    sensor.set_temperature_oversample(bme680.OS_8X)
-    # sensor.set_filter(bme680.FILTER_SIZE_3)
-    # sensor.set_gas_heater_temperature(320)  # degrees Celsius
-    # sensor.set_gas_heater_duration(150)      # milliseconds
 
     # Read sensor data
     if sensor.get_sensor_data():
