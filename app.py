@@ -22,7 +22,8 @@ def index():
     sensor_data = sensor.read_sensor_data()  # Read sensor data
     temp = sensor_data["temperature"] if sensor_data else "N/A"
     humidity = sensor_data["humidity"] if sensor_data else "N/A"
-    
+    print("temp: {temp:0.2f}, humidity: {humidity:0.2f}")
+
     if request.method =='POST':
         if request.form['reset_i2c'] == 'Reset I2C':
             sensor = BME680Sensor()  # Initialize the sensor
