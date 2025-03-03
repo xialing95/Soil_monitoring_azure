@@ -9,6 +9,7 @@ from flask import Flask, render_template, Response, request, json, jsonify
 from camera_utils import preview, time_lapse
 import asyncio
 import RPi.GPIO as GPIO
+from bme68x_utils import BME680Sensor
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -16,27 +17,24 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     # setup the hardware sensor & checking on the status
-    # soil_sensor_init()
+    sensor = BME680Sensor()  # Initialize the sensor
 
-    # moisture = soilsensor.moisture_read()
-    # temp = soilsensor.get_temp()
-    moisture = "N/A"
-    temp = "N/A"
+    sensor_data = sensor.read_sensor_data()  # Read sensor data
+    temp = sensor_data["temperature"] if sensor_data else "N/A"
+    humidity = sensor_data["humidity"] if sensor_data else "N/A"
     
     if request.method =='POST':
         if request.form['reset_i2c'] == 'Reset I2C':
-            # soil_sensor_init()
-            # moisture = soilsensor.moisture_read()
-            # temp = soilsensor.get_temp()
-            moisture = "N/A"
-            temp = "N/A"
-            print("turning display off")
+            sensor = BME680Sensor()  # Initialize the sensor
 
+            sensor_data = sensor.read_sensor_data()  # Read sensor data
+            temp = sensor_data["temperature"] if sensor_data else "N/A"
+            humidity = sensor_data["humidity"] if sensor_data else "N/A"
         
     #update flask UI 
     templateData ={
         'temp' : temp,
-        'moisture' : moisture,
+        'humidity' : humidity,
         }
     
     return render_template('index.html', **templateData)
