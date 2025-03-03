@@ -5,7 +5,10 @@ def get_bme680_data():
     try:
         sensor = bme680.BME680(bme680.I2C_ADDR_PRIMARY)
     except (RuntimeError, IOError):
-        sensor = bme680.BME680(bme680.I2C_ADDR_SECONDARY)
+        try:
+            sensor = bme680.BME680(bme680.I2C_ADDR_SECONDARY)
+        except (RuntimeError, IOError):
+            print("Could not initialize BME680 sensor!")
 
     # Configure the sensor
     sensor.set_humidity_oversample(bme680.OS_2X)
