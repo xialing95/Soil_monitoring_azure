@@ -55,8 +55,9 @@ def preview():
     picam2.start()
 
     ctrls = Controls(picam2)
-    ctrls.AnalogueGain = 1.0
-    ctrls.ExposureTime = 10
+    ctrls.AnalogueGain = config["awbGain"]
+    ctrls.ExposureTime = config["expSpd"]
+    ctrls.ISO = config["iso"]
     picam2.set_controls(ctrls)
     time.sleep(1)
 
