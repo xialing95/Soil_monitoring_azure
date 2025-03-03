@@ -42,6 +42,7 @@ class BME680Sensor:
             print("Gas Resistance: {} Ohms".format(data["gas_resistance"]))
             print("Air Quality: {}".format(data["air_quality"]))
             print("-----------------------------")
+            return data
         else:
             print("Failed to read sensor data.")
 
