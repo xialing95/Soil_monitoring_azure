@@ -24,6 +24,7 @@ def get_bme680_data():
         return data
     else:
         return None
+        print ("Failed to read sensor data")
 
 # # Example usage
 # if __name__ == "__main__":
