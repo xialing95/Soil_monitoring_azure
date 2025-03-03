@@ -23,7 +23,6 @@ try:
             print("Pressure: {:.2f} hPa".format(sensor.data.pressure))
             print("Humidity: {:.2f} %".format(sensor.data.humidity))
             print("Gas Resistance: {} Ohms".format(sensor.data.gas_resistance))
-            print("Air Quality: {}".format(sensor.data.air_quality))
             print("-----------------------------")
         
         # Wait before the next measurement
