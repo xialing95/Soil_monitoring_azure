@@ -80,7 +80,7 @@ def timelapse_bme680(interval, duration):
     while (time.time() - start_time < duration):
         data = get_bme680_data(sensor)
         env_sensor_log(data)
-        print("datalog" + time.time())
+        print("datalog" + str(time.time()))
 
         time.sleep(interval)
 
