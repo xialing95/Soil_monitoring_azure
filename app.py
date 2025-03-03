@@ -119,8 +119,8 @@ def startEnvSensor():
 
     start_env_logging_thread(interval, duration)
 
-    return 
-    
+    return render_template('index.html')
+
 @app.route('/image_preview')
 def image_preview():
     def generate():
