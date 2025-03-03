@@ -114,6 +114,8 @@ def start_time_lapse():
 @app.route('/startEnvSensor', methods = ['POST', 'GET'])
 def start_time_lapse():
     start_env_logging_thread(10, 60)
+
+    return render_template('index.html')
     
 @app.route('/image_preview')
 def image_preview():
