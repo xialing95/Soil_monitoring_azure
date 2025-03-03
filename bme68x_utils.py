@@ -30,11 +30,24 @@ def env_sensor_log(data):
     sensorlog_f.close()
     return
 
-def get_bme680_data():
-    try:
-        sensor = bme680.BME680(bme680.I2C_ADDR_SECONDARY)
-    except (RuntimeError, IOError):
-        print("Could not initialize BME680 sensor!")
+# Function to initialize the BME680 sensor with retries
+def initialize_bme680(max_retries=5, delay=2):
+    for attempt in range(max_retries):
+        try:
+            sensor = bme680.BME680(bme680.I2C_ADDR_SECONDARY)
+            print("BME680 sensor initialized successfully!")
+            return sensor
+        except (RuntimeError, IOError) as e:
+            print(f"Attempt {attempt + 1} of {max_retries}: Could not initialize BME680 sensor! Error: {e}")
+            time.sleep(delay)  # Wait before retrying
+    print("Failed to initialize BME680 sensor after multiple attempts.")
+    return None
+
+def get_bme680_data(sensor):
+    if sensor is None:
+        # Handle the case where the sensor could not be initialized
+        print("Exiting program due to sensor initialization failure.")
+        exit(1)
 
     # Configure the sensor
     sensor.set_humidity_oversample(bme680.OS_2X)
@@ -59,12 +72,13 @@ def get_bme680_data():
     
 def timelapse_bme680(interval, duration):
     check_env_sensor_log()
+    sensor = initialize_bme680()
 
     """Read data from the BME680 sensor at a specified interval for a given duration."""
     start_time = time.time()
 
     while (time.time() - start_time < duration):
-        data = get_bme680_data()
+        data = get_bme680_data(sensor)
         env_sensor_log(data)
         print("datalog" + time.time())
 
