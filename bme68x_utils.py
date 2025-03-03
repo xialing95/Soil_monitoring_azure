@@ -1,5 +1,33 @@
 import bme680
 import time
+import os
+
+# set file directory to static 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
+APP_STATIC = os.path.join(APP_ROOT, 'static')
+APP_ENV_SENSOR_LOG = '/EnvironmentalState.txt'
+
+# create SoilState file if not exist 
+def check_env_sensor_log():
+    if not os.path.exists(APP_STATIC + APP_ENV_SENSOR_LOG):
+        sensorlog_f = open(APP_STATIC + APP_ENV_SENSOR_LOG, 'a')
+        sensorlog_f.write('time, temperature (C), humidity (%), pressure (nPa) ' + "\n")
+        sensorlog_f.close()
+        print(APP_ENV_SENSOR_LOG + 'created')
+    else:
+        print(APP_ENV_SENSOR_LOG + 'exist')
+
+# write on the soil log file
+def env_sensor_log(data):
+    time = time.strftime("%m-%d-%H%M%S", time.localtime())
+    temp = data["temperature"]
+    humidity = sensor_data["humidity"]
+    pressure = sensor_data["pressure"]
+    
+    sensorlog_f = open(APP_STATIC + APP_ENV_SENSOR_LOG, 'a')
+    sensorlog_f.write(str(time) + ", " + str(temp) + ", " + str(humidity) + str(pressure) "\n")
+    sensorlog_f.close()
+    return
 
 def get_bme680_data():
     try:
@@ -27,19 +55,23 @@ def get_bme680_data():
     else:
         print ("Failed to read sensor data")
         return None
+    
+def timelapse_bme680(interval, duration):
+    check_env_sensor_log()
+
+    """Read data from the BME680 sensor at a specified interval for a given duration."""
+    start_time = time.time()
+
+    while (time.time() - start_time < duration):
+        data = get_bme680_data()
+        env_sensor_log(data)
+        print("datalog" + time.time())
+
+        time.sleep(interval)
 
 # Example usage
 if __name__ == "__main__":
     try:
-        while True:
-            sensor_data = get_bme680_data()
-            if sensor_data:
-                print(f"Temperature: {sensor_data['temperature']:.2f} °C")
-                print(f"Humidity: {sensor_data['humidity']:.2f} %")
-                print(f"Pressure: {sensor_data['pressure']:.2f} hPa")
-                print('---')
-            else:
-                print("Failed to read sensor data.")
-            time.sleep(1)  # Read every second
+       timelapse_bme680(1, 60)
     except KeyboardInterrupt:
         print("Exiting...")

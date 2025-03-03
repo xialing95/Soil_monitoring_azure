@@ -105,7 +105,7 @@ def capture_timelapse(interval, duration, NAME):
     picam2.stop()  # Stop the camera
     laser_off()
 
-# Main function
+# Time Lapse Main function
 def time_lapse(inputDuration, inputInterval, NAME):
     interval = inputInterval  # Interval in seconds between captures
     duration = inputDuration  # Total duration of the timelapse in seconds

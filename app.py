@@ -20,18 +20,20 @@ def index():
     sensor_data = get_bme680_data()
     temp = sensor_data["temperature"] if sensor_data else "N/A"
     humidity = sensor_data["humidity"] if sensor_data else "N/A"
-
+    pressure = sensor_data["pressure"] if sensor_data else "N/A"
 
     if request.method =='POST':
         if request.form['reset_i2c'] == 'Reset I2C':
             sensor_data = get_bme680_data() 
             temp = sensor_data["temperature"] if sensor_data else "N/A"
             humidity = sensor_data["humidity"] if sensor_data else "N/A"
+            pressure = sensor_data["pressure"] if sensor_data else "N/A"
 
     #update flask UI 
     templateData ={
         'temp' : temp,
         'humidity' : humidity,
+        'pressure' : pressure,
         }
     
     return render_template('index.html', **templateData)
@@ -80,10 +82,12 @@ def camera_setting():
 def start_time_lapse():
     #set this to the number of minutes you wish to run your timelapse camera
     tlminutes = float(request.form.get('duration'))
+
     #number of seconds delay between each photo taken
     secondsinterval = int(request.form.get('interval'))
     filename = request.form.get('filename')
     arguments = request.form.get('arguments')
+
     #number of photos to take
     numphotos = int((tlminutes*60)/secondsinterval) 
     print("number of photos to take = ", numphotos)
