@@ -112,7 +112,7 @@ def start_time_lapse():
     return render_template('index.html', **templateData)
 
 @app.route('/startEnvSensor', methods = ['POST', 'GET'])
-def start_time_lapse():
+def startEnvSensor():
     #number of seconds delay between each photo taken
     interval = int(request.form.get('sensor_interval'))
     duration = float(request.form.get('sensor_duration'))
