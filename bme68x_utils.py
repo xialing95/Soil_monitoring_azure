@@ -19,18 +19,25 @@ class BME680Sensor:
 
     def read_sensor_data(self):
         """Read data from the sensor."""
-        if self.sensor.get_sensor_data():
-            data = {
-                "temperature": self.sensor.data.temperature,
-                "pressure": self.sensor.data.pressure,
-                "humidity": self.sensor.data.humidity,
-                "gas_resistance": self.sensor.data.gas_resistance,
-                "air_quality": getattr(self.sensor.data, 'air_quality', 'N/A')  # Handle missing attribute
-            }
-            return data
-        else:
-            print("Failed to get sensor data.")
-            return None
+        data = {
+            "temperature": self.sensor.data.temperature,
+            "pressure": self.sensor.data.pressure,
+            "humidity": self.sensor.data.humidity,
+            "gas_resistance": self.sensor.data.gas_resistance,
+            "air_quality": getattr(self.sensor.data, 'air_quality', 'N/A')  # Handle missing attribute
+        }
+        # if self.sensor.get_sensor_data():
+        #     data = {
+        #         "temperature": self.sensor.data.temperature,
+        #         "pressure": self.sensor.data.pressure,
+        #         "humidity": self.sensor.data.humidity,
+        #         "gas_resistance": self.sensor.data.gas_resistance,
+        #         "air_quality": getattr(self.sensor.data, 'air_quality', 'N/A')  # Handle missing attribute
+        #     }
+        #     return data
+        # else:
+        #     print("Failed to get sensor data.")
+        #     return None
 
     def print_sensor_data(self):
         """Print the sensor data."""
