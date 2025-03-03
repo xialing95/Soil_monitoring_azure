@@ -1,4 +1,5 @@
 import bme680
+import threading
 import time
 import os
 
@@ -70,13 +71,12 @@ def get_bme680_data(sensor):
         print ("Failed to read sensor data")
         return None
     
-def timelapse_bme680(interval, duration):
+"""Read data from the BME680 sensor at a specified interval for a given duration."""
+def timelapse_env_log(interval, duration):
     check_env_sensor_log()
     sensor = initialize_bme680()
 
-    """Read data from the BME680 sensor at a specified interval for a given duration."""
     start_time = time.time()
-
     while (time.time() - start_time < duration):
         data = get_bme680_data(sensor)
         env_sensor_log(data)
@@ -84,9 +84,15 @@ def timelapse_bme680(interval, duration):
 
         time.sleep(interval)
 
+# Function to start the logging in a separate thread
+def start_env_logging_thread(interval, duration):
+    logging_thread = threading.Thread(target=timelapse_env_log, args=(interval, duration))
+    logging_thread.start()
+    return logging_thread
+
 # Example usage
 if __name__ == "__main__":
     try:
-       timelapse_bme680(1, 60)
+       start_env_logging_thread(10, 60)
     except KeyboardInterrupt:
         print("Exiting...")

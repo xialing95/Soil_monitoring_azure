@@ -8,14 +8,6 @@
       
       <h1>Soil Holographic Stream</h1>
       
-      <form method="POST" action ="/">
-        <div class = "form-input">
-          <h4> Temperature: {{temp}}°C, Humidity: {{humidity}}%, Pressure: {{pressure}}hPa
-            <input type="submit" name="reset_i2c" value="Reset I2C"></input></h4> 
-        </div>
-      </form>
-
-      
       <h3>Latest Image Preview</h3>
       <div>
         <img src="{{ url_for('image_preview') }}" width="50%">
@@ -53,9 +45,20 @@
         Filename: <input type="text" name="filename" placeholder="location, microbes"><br>
         Total run time (seconds) <input type="integer" name="duration" placeholder="60"><br>
         Interval between shot (seconds): <input type="integer" name = "interval" placeholder = "10"><br>
-        <input type="submit" value="startTimeLapse"></input>
+        <input type="submit" value="Start TimeLapse"></input>
         </form>
       </div>
+
+      <form method="POST" action ="/startEnvSensor">
+        <div class = "form-input">
+          <h4> Temperature: {{temp}}°C, Humidity: {{humidity}}%, Pressure: {{pressure}}hPa
+            <input type="submit" name="reset_i2c" value="Reset I2C"></input></h4> 
+            <div class = "form-input">
+              Duration (seconds) <input type="integer" name="duration" placeholder="60"><br>
+              Interval (seconds): <input type="integer" name = "interval" placeholder = "10"><br>
+              <input type="submit" value="Start Environmental Sensor Log"></input>
+        </div>
+      </form>
       
       <h4> Execution time (seconds): {{elapseTime}}, Total Number Photos: {{numphotos}}</h4>      
     

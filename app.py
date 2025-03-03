@@ -9,7 +9,7 @@ from flask import Flask, render_template, Response, request, json, jsonify
 from camera_utils import preview, time_lapse
 import asyncio
 import RPi.GPIO as GPIO
-from bme68x_utils import get_bme680_data
+from bme68x_utils import get_bme680_data, start_env_logging_thread
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -110,6 +110,10 @@ def start_time_lapse():
         }
     
     return render_template('index.html', **templateData)
+
+@app.route('/startEnvSensor', methods = ['POST', 'GET'])
+def start_time_lapse():
+    start_env_logging_thread(10, 60)
     
 @app.route('/image_preview')
 def image_preview():
