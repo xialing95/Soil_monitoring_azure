@@ -20,8 +20,8 @@ def index():
     sensor = BME680Sensor()   # Initialize the sensor
 
     sensor_data = sensor.read_sensor_data()  # Read sensor data
-    temp = sensor_data["temperature"] 
-    humidity = sensor_data["humidity"] 
+    temp = str(sensor_data["temperature"])
+    humidity = str(sensor_data["humidity"])
     sensor.print_sensor_data()
 
     if request.method =='POST':
@@ -29,8 +29,8 @@ def index():
             sensor = BME680Sensor()  # Initialize the sensor
 
             sensor_data = sensor.read_sensor_data()  # Read sensor data
-            temp = sensor_data["temperature"] 
-            humidity = sensor_data["humidity"] 
+            temp = str(sensor_data["temperature"])
+            humidity = str(sensor_data["humidity"]) 
             sensor.print_sensor_data()
 
     #update flask UI 
