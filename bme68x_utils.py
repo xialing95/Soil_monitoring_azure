@@ -13,20 +13,20 @@ def check_env_sensor_log():
         sensorlog_f = open(APP_STATIC + APP_ENV_SENSOR_LOG, 'a')
         sensorlog_f.write('time, temperature (C), humidity (%), pressure (nPa) ' + "\n")
         sensorlog_f.close()
-        print(APP_ENV_SENSOR_LOG + 'created')
+        print(APP_ENV_SENSOR_LOG + ' created')
     else:
-        print(APP_ENV_SENSOR_LOG + 'exist')
+        print(APP_ENV_SENSOR_LOG + ' exist')
 
 # write on the soil log file
 def env_sensor_log(data):
-    time = time.strftime("%m-%d-%H%M%S", time.localtime())
+    timestr = time.strftime("%m-%d-%H%M%S", time.localtime())
     temp = data["temperature"]
     humidity = data["humidity"]
     pressure = data["pressure"]
     
     sensorlog_f = open(APP_STATIC + APP_ENV_SENSOR_LOG, 'a')
     # Write data to the log file
-    sensorlog_f.write(f"{time}, {temp:.2f}, {humidity:.2f}, {pressure:.2f}\n")
+    sensorlog_f.write(f"{timestr}, {temp:.2f}, {humidity:.2f}, {pressure:.2f}\n")
     sensorlog_f.close()
     return
 
