@@ -21,10 +21,20 @@ def get_bme680_data():
             'pressure': sensor.data.pressure,
             'gas_resistance': sensor.data.gas_resistance
         }
+        print(f"Temperature: {sensor_data['temperature']:.2f} °C")
+        print(f"Humidity: {sensor_data['humidity']:.2f} %")
+        print(f"Pressure: {sensor_data['pressure']:.2f} hPa")
+        print(f"Gas Resistance: {sensor_data['gas_resistance']} Ohms")
+        print('---')
         return data
     else:
-        return None
+        print(f"Temperature: {sensor_data['temperature']:.2f} °C")
+        print(f"Humidity: {sensor_data['humidity']:.2f} %")
+        print(f"Pressure: {sensor_data['pressure']:.2f} hPa")
+        print(f"Gas Resistance: {sensor_data['gas_resistance']} Ohms")
+        print('---')
         print ("Failed to read sensor data")
+        return None
 
 # # Example usage
 # if __name__ == "__main__":
