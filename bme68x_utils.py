@@ -29,6 +29,7 @@ class BME680Sensor:
             }
             return data
         else:
+            print("Failed to get sensor data.")
             return None
 
     def print_sensor_data(self):
@@ -54,6 +55,6 @@ class BME680Sensor:
             print("Program stopped by User")
 
 # Example usage
-if __name__ == "__main__":
-    bme680_sensor = BME680Sensor(address=bme680.I2C_ADDR_SECONDARY)  # Use 0x77 address
-    bme680_sensor.run()
+# if __name__ == "__main__":
+#     bme680_sensor = BME680Sensor(address=bme680.I2C_ADDR_SECONDARY)  # Use 0x77 address
+#     bme680_sensor.run()
