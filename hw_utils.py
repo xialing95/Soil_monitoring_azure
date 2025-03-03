@@ -2,7 +2,7 @@ import bme680
 import time
 
 # Create a BME680 object
-sensor = bme680.BME680(bme680.I2C_ADDR_PRIMARY)
+sensor = bme680.BME680(bme680.I2C_ADDR_SECONDARY) #0x77 address as secondary
 
 # Configure the sensor
 sensor.set_humidity_oversample(bme680.OS_2X)
