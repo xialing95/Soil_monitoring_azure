@@ -21,11 +21,12 @@ def check_env_sensor_log():
 def env_sensor_log(data):
     time = time.strftime("%m-%d-%H%M%S", time.localtime())
     temp = data["temperature"]
-    humidity = sensor_data["humidity"]
-    pressure = sensor_data["pressure"]
+    humidity = data["humidity"]
+    pressure = data["pressure"]
     
     sensorlog_f = open(APP_STATIC + APP_ENV_SENSOR_LOG, 'a')
-    sensorlog_f.write(str(time) + ", " + str(temp) + ", " + str(humidity) + str(pressure) "\n")
+    # Write data to the log file
+    sensorlog_f.write(f"{time}, {temp:.2f}, {humidity:.2f}, {pressure:.2f}\n")
     sensorlog_f.close()
     return
 
