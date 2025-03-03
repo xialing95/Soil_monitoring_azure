@@ -17,12 +17,12 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     # setup the hardware sensor & checking on the status
-    sensor = BME680Sensor()  # Initialize the sensor
+    sensor = BME680Sensor()   # Initialize the sensor
 
     sensor_data = sensor.read_sensor_data()  # Read sensor data
     temp = sensor_data["temperature"] if sensor_data else "N/A"
     humidity = sensor_data["humidity"] if sensor_data else "N/A"
-    print(f"temp: {temp}, humidity: {humidity}")
+    sensor.print_sensor_data()
 
     if request.method =='POST':
         if request.form['reset_i2c'] == 'Reset I2C':
@@ -31,7 +31,8 @@ def index():
             sensor_data = sensor.read_sensor_data()  # Read sensor data
             temp = sensor_data["temperature"] if sensor_data else "N/A"
             humidity = sensor_data["humidity"] if sensor_data else "N/A"
-        
+            sensor.print_sensor_data()
+
     #update flask UI 
     templateData ={
         'temp' : temp,
