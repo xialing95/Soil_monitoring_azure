@@ -81,15 +81,15 @@ def camera_setting():
 @app.route('/start', methods = ['POST', 'GET'])
 def start_time_lapse():
     #set this to the number of minutes you wish to run your timelapse camera
-    tlminutes = float(request.form.get('duration'))
+    duration_seconds = float(request.form.get('duration'))
 
     #number of seconds delay between each photo taken
-    secondsinterval = int(request.form.get('interval'))
+    interval_seconds = int(request.form.get('interval'))
     filename = request.form.get('filename')
     arguments = request.form.get('arguments')
 
     #number of photos to take
-    numphotos = int((tlminutes*60)/secondsinterval) 
+    numphotos = int(duration_seconds/interval_seconds) 
     print("number of photos to take = ", numphotos)
     
     #Record time started for Flask UI
@@ -98,7 +98,7 @@ def start_time_lapse():
     
     #Start time-lapse
     s = time.perf_counter()
-    time_lapse(tlminutes, secondsinterval, filename)
+    time_lapse(duration_seconds, interval_seconds, filename)
     elapsed = time.perf_counter() - s
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")
     
