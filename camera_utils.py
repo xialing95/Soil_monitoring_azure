@@ -66,19 +66,35 @@ def preview():
 
     picam2.close()
     laser_off()
+    return
 
 def capture_image(camera, path):
     """Capture an image and save it to the specified path."""
     camera.capture_file(path)
     print(f"Captured image: {path}")
+    return
+
+#Check disk space (if it is less than 2mb, it will not be able to save the image)
+def check_disk_space(directory, required_space_mb=200):
+    """Check if there is enough disk space in the specified directory."""
+    statvfs = os.statvfs(directory)
+    free_space_mb = (statvfs.f_bavail * statvfs.f_frsize) / (1024 * 1024)
+    return free_space_mb >= required_space_mb
 
 # Function to capture images
 def capture_timelapse(interval, duration, NAME):
     picam2 = Picamera2()
     picam2.start()  # Start the camera
+    frame_count = 0
+    expected_frame_count = int(duration/interval)
 
-    end_time = time.time() + duration
-    while time.time() < end_time:
+    if not check_disk_space(APP_STATIC):
+        print("Not enough disk space to save images. Minimal 200mb")
+        return
+
+    # second from epoch time + duration in seconds
+    start_time = time.time()
+    while (time.time()-start_time) < duration:
         #turn laser on
         laser_on()
 
@@ -98,12 +114,19 @@ def capture_timelapse(interval, duration, NAME):
         # np.save(path, raw_data)
 
         request.save_dng(path)
+        frame_count += 1
 
         request.release()  # Release the request
         time.sleep(interval)  # Wait for the specified interval
 
+    if frame_count == expected_frame_count:
+        print ("Success! Captured the expected number of images.")
+    else: 
+        print(f"Warning: Did not capture expect number of images.")
+    
     picam2.stop()  # Stop the camera
     laser_off()
+    return 
 
 # Time Lapse Main function
 def time_lapse(inputDuration, inputInterval, NAME):
@@ -120,5 +143,4 @@ def time_lapse(inputDuration, inputInterval, NAME):
     # Optionally, wait for the thread to finish
     timelapse_thread.join()
     print("Timelapse capture completed.")
-
-
+    return
