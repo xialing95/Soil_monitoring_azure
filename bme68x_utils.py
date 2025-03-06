@@ -61,7 +61,7 @@ def initialize_bme680(max_retries=3, delay=2):
             time.sleep(delay)  # Wait before retrying
     print("Failed to initialize BME680 sensor after multiple attempts.")
 
-    return None
+    return 
 
 def get_single_data():
     sensor = initialize_bme680()

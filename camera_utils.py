@@ -57,7 +57,6 @@ def preview():
     # Attempt to set ISO
     try: 
         ctrls = Controls(picam2)
-        # Set exposure mode to auto
         ctrls.AnalogueGain = config["awbGain"]
         ctrls.ExposureTime = config["expSpd"]
         ctrls.Brightness = config["iso"]
