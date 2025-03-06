@@ -54,11 +54,18 @@ def preview():
     
     picam2.start()
 
-    ctrls = Controls(picam2)
-    ctrls.AnalogueGain = config["awbGain"]
-    ctrls.ExposureTime = config["expSpd"]
-    ctrls.ISO = config["iso"]
-    picam2.set_controls(ctrls)
+    # Attempt to set ISO
+    try: 
+        ctrls = Controls(picam2)
+        # Set exposure mode to auto
+        ctrls.AnalogueGain = config["awbGain"]
+        ctrls.ExposureTime = config["expSpd"]
+        ctrls.Brightness = config["iso"]
+        picam2.set_controls(ctrls)
+        print("Setting changed successfully")
+    except RuntimeError as e:
+        print(f"Failed to set controls: {e}")
+        
     time.sleep(1)
 
     metadata = picam2.capture_file("static/preview.jpg")

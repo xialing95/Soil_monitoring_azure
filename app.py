@@ -1,3 +1,10 @@
+"""
+TO DO:
+Add hotspot for setup with constant IP and still connect to wifi
+Add display for checking status
+Add dropbox for image upload
+"""
+
 #!/usr/bin/env python
 from importlib import import_module
 import datetime
