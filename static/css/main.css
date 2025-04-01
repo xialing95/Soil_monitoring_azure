@@ -73,11 +73,14 @@ body {
   
   form ul {
     padding: 0;
+    list-style-type: none;
   }
   
   form ul li {
     list-style-type: none;
     margin-bottom: 10px;
+    list-style-type: none;
+
   }
   
   input[type="text"], input[type="integer"], input[type="string"] {
