@@ -79,8 +79,6 @@
             {% endfor %}
         </ul>
       </div>
-
-
     </div>
 
     <script>
@@ -98,7 +96,8 @@
                         <a href="/static/${image}" download>
                             <button>Download</button>
                         </a>
-                        <button onclick="deleteImage('${image}') style="background-color: red">Delete</button>
+
+                        <button onclick="deleteImage('${image}')>Delete</button>
                     `;
                     imageList.appendChild(listItem);
                 });
