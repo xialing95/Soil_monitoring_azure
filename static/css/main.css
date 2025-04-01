@@ -89,7 +89,7 @@ body {
     margin-top: 5px;
   }
   
-  input[type="submit"] {
+  input[type="submit"], button {
     background-color: #007BFF;
     color: white;
     border: none;

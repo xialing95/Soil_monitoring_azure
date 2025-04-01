@@ -76,9 +76,7 @@
             <li>
                 {{ image }}
                 <a href="{{ url_for('download', filename=image) }}" download>Download</a>
-                <form action="{{ url_for('delete', filename=image) }}" method="POST" style="display:inline;">
-                    <button type="submit">Delete</button>
-                </form>
+                <a href="{{ url_for('delete', filename=image) }}" delete>Delete</a>
             </li>
             {% endfor %}
         </ul>
