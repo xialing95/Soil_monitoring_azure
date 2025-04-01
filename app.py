@@ -144,12 +144,6 @@ def image_preview():
     return Response(generate(), 
                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/image_list')
-def image_list():
-    # List the image files in the folder (filter if needed)
-    images = [f for f in os.listdir(APP_STATIC) if f.lower().endswith(('png', 'jpg', 'jpeg', 'gif', 'dng', 'txt'))]
-    return render_template('index.html', images=images)
-
 # Route to get the updated list of images (AJAX request)
 @app.route('/get_images')
 def get_images():
