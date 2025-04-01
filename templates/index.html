@@ -73,9 +73,6 @@
         <ul id="image-list">
             {% for image in images %}
             <li>
-                {{ image }}
-                <a href="{{ url_for('download', filename=image) }}" download>Download</a>
-                <button onclick="deleteImage('{{ image }}')">Delete</button>
             </li>
             {% endfor %}
         </ul>
@@ -97,7 +94,7 @@
                     listItem.innerHTML = `
                         ${image}
                         <button href="/static/${image}" download>Download</button>
-                        <button onclick="deleteImage('${image}' )" style="background-color: red >Delete</button>
+                        <button onclick="deleteImage('${image}')" style="background-color: red;">Delete</button>
                     `;
                     imageList.appendChild(listItem);
                 });
