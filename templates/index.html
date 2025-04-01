@@ -13,58 +13,59 @@
         <img src="{{ url_for('image_preview') }}" width="50%">
       </div>
   
-      <h3> Camera Setting </h3>
-      <div class = "form-input">        
-        <form method = "POST" action = "/camera_setting">
-        
-        <ul style="list-style-type:none;">        
-          <li>Resolution: (640, 640): <b>{{resolution}}</b> 
-            <input type="string" name = "resolution" value = "{{resolution}}"></li>
-          <li>Framerate: 10-30: <b>{{framerate}}</b> 
-            <input type="integer" name = "framerate" value = {{framerate}} ></li>
-          <li>ISO (gain): 50-600: <b>{{iso}}</b> 
-            <input type="integer" name = "iso" value = {{iso}} ></li>
-          <li>Shutter Speed (us): 50-10000: <b>{{expSpd}}</b> 
-            <input type="integer" name = "expSpd" value= {{expSpd}} ></li>
-          <li>Exposure Mode: auto/off: <b>{{expMod}}</b> 
-            <input type="string" name = "expMod" value = {{expMod}} ></li>
-          <li>Auto White Balance Mode: auto/off: <b>{{awbMod}}</b> 
-            <input type="string" name = "awbMod" value = {{awbMod}} ></li>
-          <li>Auto White Balance Gain: 0.9-1.9: <b>{{awbGain}}</b> 
-            <input type="integer" name = "awbGain" value = {{awbGain}}  ></li>
-        </ul>
-        
-        <input type = "submit" value = "Preview Camera Setting"></input> 
-        </form>
-      
-      </div>
-      
-      <form method="POST" action ="/start">
-      <h3> Time Lapse Setting </h3>
-      <div class = "form-input">
-        Filename: <input type="text" name="filename" placeholder="location, microbes"><br>
-        Total run time (seconds) <input type="integer" name="duration" placeholder="60"><br>
-        Interval between shot (seconds): <input type="integer" name = "interval" placeholder = "10"><br>
-        <input type="submit" value="Start TimeLapse"></input>
+      <div id="camera-setting" class="form-input">      
+        <h3>Camera Setting</h3>  
+        <form method="POST" action="/camera_setting">
+          <ul style="list-style-type:none;">        
+            <li>Resolution: (640, 640): <b>{{resolution}}</b> 
+              <input type="text" name="resolution" value="{{resolution}}"></li>
+            <li>Framerate: 10-30: <b>{{framerate}}</b> 
+              <input type="number" name="framerate" value="{{framerate}}"></li>
+            <li>ISO (gain): 50-600: <b>{{iso}}</b> 
+              <input type="number" name="iso" value="{{iso}}"></li>
+            <li>Shutter Speed (us): 50-10000: <b>{{expSpd}}</b> 
+              <input type="number" name="expSpd" value="{{expSpd}}"></li>
+            <li>Exposure Mode: auto/off: <b>{{expMod}}</b> 
+              <input type="text" name="expMod" value="{{expMod}}"></li>
+            <li>Auto White Balance Mode: auto/off: <b>{{awbMod}}</b> 
+              <input type="text" name="awbMod" value="{{awbMod}}"></li>
+            <li>Auto White Balance Gain: 0.9-1.9: <b>{{awbGain}}</b> 
+              <input type="number" name="awbGain" step="0.1" value="{{awbGain}}"></li>
+          </ul>
+          <input type="submit" value="Preview Camera Setting"> 
         </form>
       </div>
-
-      <form method="POST" action ="/">
-        <div class = "form-input">
-          <h4> Temperature: {{temp}}°C, Humidity: {{humidity}}%, Pressure: {{pressure}}hPa
-            <input type="submit" name="reset_i2c" value="Reset I2C"></input></h4> 
-      </form>
-
-      <form method="POST" action ="/startEnvSensor">
-        <div class = "form-input">
-          Duration (seconds) <input type="integer" name="sensor_duration" placeholder="60"><br>
-          Interval (seconds): <input type="integer" name = "sensor_interval" placeholder = "10"><br>
-          <input type="submit" value="Start Environmental Sensor Log"></input>
-        </div>
-      </form>
       
-      <h4> Execution time (seconds): {{elapseTime}}, Total Number Photos: {{numphotos}}</h4>      
-    
+      <div id="timelapse-setting">
+        <h3>Time Lapse Setting</h3>
+        <form method="POST" action="/start">
+          <div class="form-input">
+            Filename: <input type="text" name="filename" placeholder="location, microbes"><br>
+            Total run time (seconds): <input type="number" name="duration" placeholder="60"><br>
+            Interval between shots (seconds): <input type="number" name="interval" placeholder="10"><br>
+            <input type="submit" value="Start TimeLapse">
+          </div>
+        </form>
+        <h4>Execution time (seconds): {{elapseTime}}, Total Number Photos: {{numphotos}}</h4>      
+      </div>
+
+      <div id="bme680-setting">
+        <h3>Environmental Sensor</h3>
+        <form method="POST" action="/">
+          <div class="form-input">
+            <h4>Temperature: {{temp}}°C, Humidity: {{humidity}}%, Pressure: {{pressure}}hPa</h4>
+            <input type="submit" name="reset_i2c" value="Reset I2C">
+          </div>
+        </form>
+
+        <form method="POST" action="/startEnvSensor">
+          <div class="form-input">
+            Duration (seconds): <input type="number" name="sensor_duration" placeholder="60"><br>
+            Interval (seconds): <input type="number" name="sensor_interval" placeholder="10"><br>
+            <input type="submit" value="Start Environmental Sensor Log">
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>
