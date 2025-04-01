@@ -17,13 +17,13 @@
         <h3>Camera Setting</h3>  
         <form method="POST" action="/camera_setting">
           <ul style="list-style-type:none;">        
-            <li>Resolution: (640, 640): <b>{{resolution}}</b> 
+            <li>Resolution: Min(640x640) to Max(4608×2592): <b>{{resolution}}</b> 
               <input type="text" name="resolution" value="{{resolution}}"></li>
             <li>Framerate: 10-30: <b>{{framerate}}</b> 
               <input type="number" name="framerate" value="{{framerate}}"></li>
-            <li>ISO (gain): 50-600: <b>{{iso}}</b> 
+            <li>Analogue Gain: 50-1600: <b>{{iso}}</b> 
               <input type="number" name="iso" value="{{iso}}"></li>
-            <li>Shutter Speed (us): 50-10000: <b>{{expSpd}}</b> 
+            <li>Exposure Time (us): 30-200000: <b>{{expSpd}}</b> 
               <input type="number" name="expSpd" value="{{expSpd}}"></li>
             <li>Exposure Mode: auto/off: <b>{{expMod}}</b> 
               <input type="text" name="expMod" value="{{expMod}}"></li>
@@ -36,10 +36,10 @@
         </form>
       </div>
       
-      <div id="timelapse-setting">
+      <div id="timelapse-setting" class="form-input">
         <h3>Time Lapse Setting</h3>
         <form method="POST" action="/start">
-          <div class="form-input">
+          <div>
             Filename: <input type="text" name="filename" placeholder="location, microbes"><br>
             Total run time (seconds): <input type="number" name="duration" placeholder="60"><br>
             Interval between shots (seconds): <input type="number" name="interval" placeholder="10"><br>
@@ -49,17 +49,17 @@
         <h4>Execution time (seconds): {{elapseTime}}, Total Number Photos: {{numphotos}}</h4>      
       </div>
 
-      <div id="bme680-setting">
+      <div id="bme680-setting" class="form-input">
         <h3>Environmental Sensor</h3>
         <form method="POST" action="/">
-          <div class="form-input">
+          <div>
             <h4>Temperature: {{temp}}°C, Humidity: {{humidity}}%, Pressure: {{pressure}}hPa</h4>
             <input type="submit" name="reset_i2c" value="Reset I2C">
           </div>
         </form>
 
         <form method="POST" action="/startEnvSensor">
-          <div class="form-input">
+          <div>
             Duration (seconds): <input type="number" name="sensor_duration" placeholder="60"><br>
             Interval (seconds): <input type="number" name="sensor_interval" placeholder="10"><br>
             <input type="submit" value="Start Environmental Sensor Log">
