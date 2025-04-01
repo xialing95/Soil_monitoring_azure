@@ -85,25 +85,25 @@
     </div>
 
     <script>
-      // Function to update the image list dynamically
-      function updateImageList() {
-          fetch('/get_images')
-              .then(response => response.json())
-              .then(data => {
-                  const imageList = document.getElementById('image-list');
-                  imageList.innerHTML = '';  // Clear the existing list
-                  data.forEach(image => {
-                      const listItem = document.createElement('li');
-                      listItem.innerHTML = `
-                          ${image}
-                          <a href="/static/${image}" download>Download</a>
-                          <button onclick="deleteImage('${image}')">Delete</button>
-                      `;
-                      imageList.appendChild(listItem);
-                  });
-              })
-              .catch(error => console.error('Error fetching image list:', error));
-      }
+    // Function to update the image list dynamically
+    function updateImageList() {
+        fetch('/get_images')
+            .then(response => response.json())
+            .then(data => {
+                const imageList = document.getElementById('image-list');
+                imageList.innerHTML = '';  // Clear the existing list
+                data.forEach(image => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        ${image}
+                        <button href="/static/${image}" download>Download</button>
+                        <button onclick="deleteImage('${image}' )" style="background-color: red >Delete</button>
+                    `;
+                    imageList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching image list:', error));
+    }
 
     function deleteImage(filename) {
     fetch(`/delete-image/${filename}`, { method: 'DELETE' })
@@ -118,25 +118,6 @@
         })
         .catch(error => console.error('Error deleting image:', error)); 
     }
-  
-
-    // function deleteImage(imageName) {
-    //     if (confirm(`Are you sure you want to delete ${imageName}?`)) {
-    //         fetch(`/delete-image/${imageName}`, {
-    //             method: 'DELETE',
-    //         })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 alert(`${imageName} has been deleted.`);
-    //                 // Refresh the image list
-    //                 updateImageList();
-    //             } else {
-    //                 alert(`Failed to delete ${imageName}.`);
-    //             }
-    //         })
-    //         .catch(error => console.error('Error:', error));
-    //     }
-    // }
     </script>
 
   </body>
