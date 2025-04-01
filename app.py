@@ -10,7 +10,8 @@ from importlib import import_module
 import datetime
 import time
 import glob
-from flask import Flask, render_template, Response, request, json, jsonify
+import os
+from flask import Flask, render_template, Response, request, json, jsonify, send_from_directory, redirect, url_for
 
 # import time_lapse_utils
 from camera_utils import preview, time_lapse
@@ -20,6 +21,11 @@ from bme68x_utils import get_single_data, start_env_logging_thread
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+# set file directory
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
+APP_STATIC = os.path.join(APP_ROOT, 'static')
+app.config['UPLOAD_FOLDER'] = APP_STATIC
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
@@ -44,7 +50,6 @@ def index():
         }
     
     return render_template('index.html', **templateData)
-
 
 @app.route('/camera_setting', methods = ['POST', 'GET'])
 def camera_setting():
@@ -138,6 +143,31 @@ def image_preview():
           b'Content-Type: image/jpeg\r\n\r\n' + open(newest, 'rb').read() + b'\r\n')
     return Response(generate(), 
                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/image_list')
+def index():
+    # List the image files in the folder (filter if needed)
+    images = [f for f in os.listdir(APP_STATIC) if f.lower().endswith(('png', 'jpg', 'jpeg', 'gif'))]
+    return render_template('index.html', images=images)
+
+# Route to get the updated list of images (AJAX request)
+@app.route('/get_images')
+def get_images():
+    images = [f for f in os.listdir(APP_STATIC) if f.lower().endswith(('png', 'jpg', 'jpeg', 'gif'))]
+    return jsonify(images)
+
+# Route to serve an image file for download
+@app.route('/download/<filename>')
+def download(filename):
+    return send_from_directory(APP_STATIC, filename, as_attachment=True)
+
+# Route to delete an image
+@app.route('/delete/<filename>', methods=['POST'])
+def delete(filename):
+    file_path = os.path.join(APP_STATIC, filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=True)

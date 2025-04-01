@@ -2,6 +2,27 @@
   <head>
     <title>Soil Holographic Sensor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script>
+        // Function to update the image list dynamically
+        function updateImageList() {
+            fetch('/get_images')
+                .then(response => response.json())
+                .then(data => {
+                    const imageList = document.getElementById('image-list');
+                    imageList.innerHTML = '';  // Clear the existing list
+                    data.forEach(image => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <img src="/static/${image}" width="100" alt="${image}">
+                            ${image}
+                            <a href="/static/${image}" download>Download</a>
+                        `;
+                        imageList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching image list:', error));
+        }
+    </script>
   </head>
   <body>
     <div class="page-content">
@@ -66,6 +87,26 @@
           </div>
         </form>
       </div>
+       
+      <div>
+        <h1>Image List</h1>
+        <!-- Button to update image list -->
+        <button onclick="updateImageList()">Update List</button>
+        <ul>
+            {% for image in images %}
+            <li>
+                <img src="{{ url_for('download', filename=image) }}" width="100">
+                {{ image }}
+                <a href="{{ url_for('download', filename=image) }}" download>Download</a>
+                <form action="{{ url_for('delete', filename=image) }}" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+      </div>
+
+
     </div>
   </body>
 </html>
