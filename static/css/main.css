@@ -20,14 +20,20 @@ input[type=text] {
  /* Section Styling with Different Colors */
 #camera-setting {
     background-color: #ffebcc; /* Light Orange */
+    justify-content: center;
+    align-items: center;
 }
 
 #timelapse-setting {
     background-color: #e0f7fa; /* Light Cyan */
+    justify-content: center;
+    align-items: center;
 }
 
 #bme680-setting {
     background-color: #d8f3dc; /* Light Green */
+    justify-content: center;
+    align-items: center;
 }
 
  /* General page styling */

@@ -2,35 +2,14 @@
   <head>
     <title>Soil Holographic Sensor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <script>
-        // Function to update the image list dynamically
-        function updateImageList() {
-            fetch('/get_images')
-                .then(response => response.json())
-                .then(data => {
-                    const imageList = document.getElementById('image-list');
-                    imageList.innerHTML = '';  // Clear the existing list
-                    data.forEach(image => {
-                        const listItem = document.createElement('li');
-                        listItem.innerHTML = `
-                            <img src="/static/${image}" width="100" alt="${image}">
-                            ${image}
-                            <a href="/static/${image}" download>Download</a>
-                        `;
-                        imageList.appendChild(listItem);
-                    });
-                })
-                .catch(error => console.error('Error fetching image list:', error));
-        }
-    </script>
   </head>
   <body>
     <div class="page-content">
       
       <h1>Soil Holographic Stream</h1>
-      
-      <h3>Latest Image Preview</h3>
       <div>
+        <h3>Latest Image Preview</h3>
+
         <img src="{{ url_for('image_preview') }}" width="50%">
       </div>
   
@@ -92,7 +71,7 @@
         <h1>Image List</h1>
         <!-- Button to update image list -->
         <button onclick="updateImageList()">Update List</button>
-        <ul>
+        <ul id="image-list">
             {% for image in images %}
             <li>
                 <img src="{{ url_for('download', filename=image) }}" width="100">
@@ -108,5 +87,28 @@
 
 
     </div>
+
+    <script>
+      // Function to update the image list dynamically
+      function updateImageList() {
+          fetch('/get_images')
+              .then(response => response.json())
+              .then(data => {
+                  const imageList = document.getElementById('image-list');
+                  imageList.innerHTML = '';  // Clear the existing list
+                  data.forEach(image => {
+                      const listItem = document.createElement('li');
+                      listItem.innerHTML = `
+                          <img src="/static/${image}" width="100" alt="${image}">
+                          ${image}
+                          <a href="/static/${image}" download>Download</a>
+                      `;
+                      imageList.appendChild(listItem);
+                  });
+              })
+              .catch(error => console.error('Error fetching image list:', error));
+      }
+    </script>
+
   </body>
 </html>
