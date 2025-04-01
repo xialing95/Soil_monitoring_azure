@@ -69,14 +69,14 @@
        
       <div id="images-list-container" class="form-input">
         <h1>Image List</h1>
-        <!-- Button to update image list -->
         <button onclick="updateImageList()">Update List</button>
         <ul id="image-list">
             {% for image in images %}
             <li>
                 {{ image }}
                 <a href="{{ url_for('download', filename=image) }}" download>Download</a>
-                <a href="{{ url_for('delete', filename=image) }}" delete>Delete</a>
+                <!-- Delete button -->
+                <button onclick="deleteImage('{{ image }}')">Delete</button>
             </li>
             {% endfor %}
         </ul>
@@ -104,6 +104,24 @@
               })
               .catch(error => console.error('Error fetching image list:', error));
       }
+
+    function deleteImage(imageName) {
+        if (confirm(`Are you sure you want to delete ${imageName}?`)) {
+            fetch(`/delete-image/${imageName}`, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert(`${imageName} has been deleted.`);
+                    // Refresh the image list
+                    updateImageList();
+                } else {
+                    alert(`Failed to delete ${imageName}.`);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
     </script>
 
   </body>

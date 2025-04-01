@@ -162,12 +162,19 @@ def download(filename):
     return send_from_directory(APP_STATIC, filename, as_attachment=True)
 
 # Route to delete an image
-@app.route('/delete/<filename>', methods=['POST'])
-def delete(filename):
-    file_path = os.path.join(APP_STATIC, filename)
-    if os.path.exists(file_path):
-        os.remove(file_path)
-    return redirect(url_for('index'))
+@app.route('/delete-image/<filename>', methods=['DELETE'])
+def delete_image(filename):
+    try:
+        # Path to your images directory
+        image_path = os.path.join(APP_STATIC, filename)
+        
+        if os.path.exists(image_path):
+            os.remove(image_path)
+            return jsonify({'message': f'{filename} deleted successfully'}), 200
+        else:
+            return jsonify({'error': 'File not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=True)
