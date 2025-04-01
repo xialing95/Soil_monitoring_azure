@@ -92,9 +92,11 @@
                 data.forEach(image => {
                     const listItem = document.createElement('li');
                     listItem.innerHTML = `
-                        ${image}
-                        <button href="/static/${image}" download>Download</button>
-                        <button onclick="deleteImage('${image}')" style="background-color: red;">Delete</button>
+                      ${image}
+                      <a href="/static/${image}" download>
+                          <button style="background-color: blue;">Download</button>
+                      </a>
+                      <button onclick="deleteImage('${image}')" style="background-color: red;">Delete</button>
                     `;
                     imageList.appendChild(listItem);
                 });
