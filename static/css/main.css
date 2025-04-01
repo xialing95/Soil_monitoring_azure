@@ -36,7 +36,7 @@ input[type=text] {
     align-items: center;
 }
 
-#image-list-container {
+#imagelist-container {
     background-color: #f4c7fb; /* Light Green */
     justify-content: center;
     align-items: center;

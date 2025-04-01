@@ -67,7 +67,7 @@
         </form>
       </div>
        
-      <div id="images-list-container" class="form-input">
+      <div id="imagelist-container" class="form-input">
         <h1>Image List</h1>
         <button onclick="updateImageList()">Update List</button>
         <ul id="image-list">
@@ -75,7 +75,6 @@
             <li>
                 {{ image }}
                 <a href="{{ url_for('download', filename=image) }}" download>Download</a>
-                <!-- Delete button -->
                 <button onclick="deleteImage('{{ image }}')">Delete</button>
             </li>
             {% endfor %}
@@ -98,6 +97,7 @@
                       listItem.innerHTML = `
                           ${image}
                           <a href="/static/${image}" download>Download</a>
+                          <button onclick="deleteImage('${image}')">Delete</button>
                       `;
                       imageList.appendChild(listItem);
                   });
@@ -105,23 +105,38 @@
               .catch(error => console.error('Error fetching image list:', error));
       }
 
-    function deleteImage(imageName) {
-        if (confirm(`Are you sure you want to delete ${imageName}?`)) {
-            fetch(`/delete-image/${imageName}`, {
-                method: 'DELETE',
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert(`${imageName} has been deleted.`);
-                    // Refresh the image list
-                    updateImageList();
-                } else {
-                    alert(`Failed to delete ${imageName}.`);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
+    function deleteImage(filename) {
+    fetch(`/delete-image/${filename}`, { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                updateImageList(); // Refresh the list after deletion
+            } else if (data.error) {
+                alert(data.error);
+            }
+        })
+        .catch(error => console.error('Error deleting image:', error)); 
     }
+  
+
+    // function deleteImage(imageName) {
+    //     if (confirm(`Are you sure you want to delete ${imageName}?`)) {
+    //         fetch(`/delete-image/${imageName}`, {
+    //             method: 'DELETE',
+    //         })
+    //         .then(response => {
+    //             if (response.ok) {
+    //                 alert(`${imageName} has been deleted.`);
+    //                 // Refresh the image list
+    //                 updateImageList();
+    //             } else {
+    //                 alert(`Failed to delete ${imageName}.`);
+    //             }
+    //         })
+    //         .catch(error => console.error('Error:', error));
+    //     }
+    // }
     </script>
 
   </body>
