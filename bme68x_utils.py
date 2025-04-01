@@ -42,7 +42,7 @@ def env_sensor_log(data):
     return
 
 # Function to initialize the BME680 sensor with retries
-def initialize_bme680(max_retries=3, delay=2):
+def initialize_bme680(max_retries=2, delay=1):
     for attempt in range(max_retries):
         try:
             sensor = bme680.BME680(bme680.I2C_ADDR_SECONDARY)
@@ -72,7 +72,13 @@ def get_bme680_data(sensor):
     if sensor is None:
         # Handle the case where the sensor could not be initialized
         print("Exiting program due to sensor initialization failure.")
-        exit(1)
+        data = {
+            'temperature': "N/A",
+            'humidity': "N/A",
+            'pressure': "N/A",
+            # 'gas_resistance': sensor.data.gas_resistance
+        }
+        return data
 
     # Read sensor data
     if sensor.get_sensor_data():
