@@ -1,11 +1,10 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
+
 .page-content {
     text-align: center
 }
@@ -16,36 +15,72 @@ input[type=text] {
     margin: 8px 0;
     box-sizing: border-box;
   }
+ */
 
-.form-input {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-}
-ul {
+ /* General page styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
     padding: 0;
-}
-li {
-    list-style: none;
+    background-color: #f4f4f9;
+  }
+  
+  .page-content {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  /* Header styles */
+  h1 {
+    color: #333;
+    text-align: center;
+  }
+  
+  h3, h4 {
+    color: #555;
+  }
+  
+  /* Form styling */
+  .form-input {
+    margin-bottom: 20px;
+  }
+  
+  form ul {
+    padding: 0;
+  }
+  
+  form ul li {
+    list-style-type: none;
     margin-bottom: 10px;
-}
-input {
-    width: 100%;
-    padding: 8px;
+  }
+  
+  input[type="text"], input[type="integer"], input[type="string"] {
+    width: calc(100% - 20px);
+    padding: 5px;
     margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-input[type="submit"] {
-    background-color: #28a745;
+  }
+  
+  input[type="submit"] {
+    background-color: #007BFF;
     color: white;
     border: none;
-    cursor: pointer;
     padding: 10px;
-    margin-top: 10px;
-}
-input[type="submit"]:hover {
-    background-color: #218838;
-}
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Image preview */
+  img {
+    display: block;
+    margin: auto;
+  }
+  
+  /* Environmental sensor log section */
+  div.form-input h4 {
+    font-size: small;
+  }
+  
