@@ -7,6 +7,20 @@
     <div class="page-content">
       
       <h1>Soil Holographic Stream</h1>
+
+      <div class="container">
+        <h2>Connect to WiFi</h2>
+        <form id="connectForm" action="/wifiConfig" method="post" onsubmit="showSpinner()">
+            <label for="ssid">SSID:</label>
+            <input type="text" id="ssid" name="ssid" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <input type="submit" value="Connect">
+        </form>
+        <div id="spinner" class="spinner"></div>
+        <div id="message" class="message">Connecting with your WiFi, please wait...</div>
+      </div>
+
       <div>
         <h3>Latest Image Preview</h3>
 
@@ -25,10 +39,26 @@
               <input type="number" name="iso" value="{{iso}}"></li>
             <li>Exposure Time (us): 30-200000: <b>{{expSpd}}</b> 
               <input type="number" name="expSpd" value="{{expSpd}}"></li>
+
+            <li>Exposure Mode: 
+                <select name="expMod">
+                    <option value="auto" {{ 'selected' if expMod == 'auto' }}>Auto</option>
+                    <option value="off" {{ 'selected' if expMod == 'off' }}>Off</option>
+                </select>
+            </li>
+            
+            <li>Auto White Balance Mode: 
+                <select name="awbMod">
+                    <option value="auto" {{ 'selected' if awbMod == 'auto' }}>Auto</option>
+                    <option value="off" {{ 'selected' if awbMod == 'off' }}>Off</option>
+                </select>
+            </li>
+
             <li>Exposure Mode: auto/off: <b>{{expMod}}</b> 
               <input type="text" name="expMod" value="{{expMod}}"></li>
             <li>Auto White Balance Mode: auto/off: <b>{{awbMod}}</b> 
               <input type="text" name="awbMod" value="{{awbMod}}"></li>
+              
             <li>Auto White Balance Gain: 0.9-1.9: <b>{{awbGain}}</b> 
               <input type="number" name="awbGain" step="0.1" value="{{awbGain}}"></li>
           </ul>
@@ -117,6 +147,12 @@
             }
         })
         .catch(error => console.error('Error deleting image:', error)); 
+    }
+
+    function showSpinner() {
+      document.getElementById('spinner').style.display = 'block';
+      document.getElementById('message').style.display = 'block';
+      document.getElementById('connectForm').style.display = 'none';
     }
     </script>
 
