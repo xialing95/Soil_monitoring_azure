@@ -47,4 +47,18 @@ Todo:
 
 Microfluidic channel
 * Thinner viewport or filter (too dense) 
-* registration mark on the channel 
+* registration mark on the channel
+* 
+
+April 26 2025
+<ul>
+<li>sudo git update
+<li>sudo git upgrade
+<li>git clone --single-branch --branch master --depth 1 <repository-url>
+<li>source env/bin/activate
+<li>sudo pip freeze > requirements.txt
+<li>sudo pip install -r requirements.txt
+
+<li>sudo python3 hotspot_setup.py --ssid YOUR_SSID --password YOUR_PASSWORD
+
+
