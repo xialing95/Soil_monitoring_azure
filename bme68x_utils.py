@@ -115,6 +115,7 @@ def start_env_logging_thread(interval, duration):
 # Example usage
 if __name__ == "__main__":
     try:
+       print(bme680.__version__)  # Should print without errors
        start_env_logging_thread(10, 60)
     except KeyboardInterrupt:
         print("Exiting...")
