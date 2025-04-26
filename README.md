@@ -42,3 +42,14 @@ Hopefully that works. Try restarting if something goes wrong, by either typing *
 
 The best way to get the image is to use ssh with either fetch or FileZilla and download the image.
 
+April 26 2026 Update
+sudo apt update
+sudo apt upgrade
+git clone --single-branch --branch master <repository-url>
+
+the file is on home/pi
+cd Soil_monitoring_azure
+source env/bin/activate
+main 
+
+
