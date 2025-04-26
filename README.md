@@ -58,6 +58,8 @@ April 26 2025
 <li>source env/bin/activate
 <li>sudo pip freeze > requirements.txt
 <li>sudo pip install -r requirements.txt
+<li>pip3 install bme680  # Official Pimoroni library[2][6]
+</li>
 
 <li>sudo python3 hotspot_setup.py --ssid YOUR_SSID --password YOUR_PASSWORD
 
