@@ -51,32 +51,32 @@ def index():
     
     return render_template('index.html', **templateData)
 
-# @app.route('/wifiConfig', methods=['GET', 'POST'])
-# def wifiConfig():
-#     if request.method == 'POST':
-#         ssid = request.form['ssid']
-#         password = request.form['password']
-#         connect_to_wifi(ssid, password)
-#     return render_template('index.html')
+@app.route('/wifiConfig', methods=['GET', 'POST'])
+def wifiConfig():
+    if request.method == 'POST':
+        ssid = request.form['ssid']
+        password = request.form['password']
+        connect_to_wifi(ssid, password)
+    return render_template('index.html')
 
-# def connect_to_wifi(ssid, password):
-#     wpa_supplicant_conf = f"""
-# ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-# update_config=1
+def connect_to_wifi(ssid, password):
+    wpa_supplicant_conf = f"""
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
 
-# network={{
-#     ssid="{ssid}"
-#     psk="{password}"
-# }}
-# """
-#     with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'w') as f:
-#         f.write(wpa_supplicant_conf)
+network={{
+    ssid="{ssid}"
+    psk="{password}"
+}}
+"""
+    with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'w') as f:
+        f.write(wpa_supplicant_conf)
 
-#     os.system('sudo ifconfig wlan0 down')
-#     os.system('sudo ifconfig wlan0 up')
-#     os.system('sudo systemctl restart wpa_supplicant')
-#     os.system('sudo systemctl restart dhcpcd')
-#     os.system('sudo wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf')
+    os.system('sudo ifconfig wlan0 down')
+    os.system('sudo ifconfig wlan0 up')
+    os.system('sudo systemctl restart wpa_supplicant')
+    os.system('sudo systemctl restart dhcpcd')
+    os.system('sudo wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf')
 
 @app.route('/camera_setting', methods = ['POST', 'GET'])
 def camera_setting():
