@@ -6,8 +6,6 @@ File "/home/pi/Soil_monitoring_azure/env/lib/python3.11/site-packages/bme680/ini
 line 352, in _get_regs return self._i2c.read_byte_data(self.i2c_addr, register) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
 File "/usr/lib/python3/dist-packages/smbus2/smbus2.py", line 433, in read_byte_data ioctl(self.fd, I2C_SMBUS, msg)
 """
-
-
 import bme680
 import threading
 import time
@@ -115,6 +113,7 @@ def start_env_logging_thread(interval, duration):
 # Example usage
 if __name__ == "__main__":
     try:
+       print(bme680.__version__)  # Should print without errors
        start_env_logging_thread(10, 60)
     except KeyboardInterrupt:
         print("Exiting...")
