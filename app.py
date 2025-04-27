@@ -197,12 +197,12 @@ def delete_image(filename):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# if __name__ == '__main__':
-#     app.run(debug=True, host='0.0.0.0', threaded=True)
-
-def run_flask():
-    app.run(host='0.0.0.0', port=80, threaded=True)
-
 if __name__ == '__main__':
-    run_flask()
+    app.run(debug=True, host='0.0.0.0', threaded=True)
+
+# def run_flask():
+#     app.run(host='0.0.0.0', port=80, threaded=True)
+
+# if __name__ == '__main__':
+#     run_flask()
 
