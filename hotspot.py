@@ -139,9 +139,9 @@ def main():
     parser.add_argument('--password', required=True, help='Password for the Wi-Fi hotspot')
     args = parser.parse_args()
 
-    if os.geteuid() != 0:
-        log_message("Please run the script with sudo.")
-        exit(1)
+    # if os.geteuid() != 0:
+    #     log_message("Please run the script with sudo.")
+    #     exit(1)
 
     log_message("Starting process...")
 
