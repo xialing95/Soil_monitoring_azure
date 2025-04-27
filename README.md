@@ -52,8 +52,8 @@ Microfluidic channel
 
 April 26 2025
 <ul>
-<li>sudo git update
-<li>sudo git upgrade
+<li>sudo apt update
+<li>sudo apt upgrade
 <li>git clone --single-branch --branch master --depth 1 <repository-url>
 <li>source env/bin/activate
 <li>sudo pip freeze > requirements.txt
