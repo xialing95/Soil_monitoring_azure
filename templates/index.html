@@ -8,7 +8,7 @@
       
       <h1>Soil Holographic Stream</h1>
 
-      <div class="container">
+      <!-- <div class="container">
         <h2>Connect to WiFi</h2>
         <form id="connectForm" action="/wifiConfig" method="post" onsubmit="showSpinner()">
             <label for="ssid">SSID:</label>
@@ -19,7 +19,7 @@
         </form>
         <div id="spinner" class="spinner"></div>
         <div id="message" class="message">Connecting with your WiFi, please wait...</div>
-      </div>
+      </div> -->
 
       <div>
         <h3>Latest Image Preview</h3>
@@ -31,7 +31,7 @@
         <h3>Camera Setting</h3>  
         <form method="POST" action="/camera_setting">
           <ul style="list-style-type:none;">        
-            <li>Resolution: Min(640x640) to Max(4608×2592): <b>{{resolution}}</b> 
+            <li>Resolution: Min [640, 640] to Max [4608, 2592]: <b>{{resolution}}</b> 
               <input type="text" name="resolution" value="{{resolution}}"></li>
             <li>Framerate: 10-30: <b>{{framerate}}</b> 
               <input type="number" name="framerate" value="{{framerate}}"></li>
