@@ -59,7 +59,8 @@ April 26 2025
 <li>sudo pip freeze > requirements.txt
 <li>sudo pip install -r requirements.txt
 <li>pip3 install bme680  # Official Pimoroni library[2][6]
-</li>
+<li>sudo apt-get install dnsmasq hostapd python3-flask dhcpcd5 iptables
+
 
 <li> python3 app.py (not sudo)
 <li> sudo /home/pi/Soil_monitoring_azure/env/bin/python hotspot.py --ssid --password
