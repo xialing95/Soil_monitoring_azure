@@ -132,6 +132,8 @@ def capture_timelapse(interval, duration, NAME):
         print(f"Warning: Did not capture expect number of images.")
     
     picam2.stop()  # Stop the camera
+    del picam2
+    print ("Stop the picamera")
     laser_off()
     return 
 
