@@ -48,8 +48,8 @@ def preview():
     # Load camera settings from JSON file
     with open('CAMERASETTING.json', 'r') as f:
         config = json.load(f)
-        resolution = tuple(config.get("resolution", [1920, 1080]))
-
+    
+    resolution = tuple(config.get("resolution", [1920, 1080]))
     preview_config = picam2.create_preview_configuration(main={"size": resolution})
     picam2.configure(preview_config)
     
