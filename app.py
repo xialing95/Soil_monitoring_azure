@@ -92,12 +92,12 @@ def camera_setting():
     except SyntaxError as err:
         print(err)
         print("Invalid input. Default value entered")
-        resolution = (640, 640)
+        resolution = (1200, 860)
         framerate = 30
         iso = 60
         expSpd = 2000
-        expMod = "off"
-        awbMod = "off"
+        expMod = "auto"
+        awbMod = "auto"
         awbGain = 1
         
     #save camera setting to json file
