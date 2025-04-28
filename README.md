@@ -61,6 +61,6 @@ April 26 2025
 <li>pip3 install bme680  # Official Pimoroni library[2][6]
 </li>
 
-<li>sudo python3 hotspot_setup.py --ssid YOUR_SSID --password YOUR_PASSWORD
-
+<li> python3 app.py (not sudo)
+<li> sudo /home/pi/Soil_monitoring_azure/env/bin/python hotspot.py --ssid --password
 
