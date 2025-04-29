@@ -149,6 +149,10 @@ def main():
         log_message("Connected to Wi-Fi successfully.")
     else:
         log_message("Could not connect to Wi-Fi. Setting up hotspot.")
+        
+        #shutdown all wifi
+        run_command('sudo nmcli device disconnect wlan0')
+
         configure_network(args.ssid, args.password)
         restart_services()
 
