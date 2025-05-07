@@ -97,6 +97,7 @@ def capture_timelapse(interval, duration, NAME):
     resolution = tuple(config.get("resolution", [1920, 1080]))
 
     from picamera2 import Picamera2
+    print(Picamera2.global_camera_info())
 
     with Picamera2() as picam2:
         # Configure camera with resolution
