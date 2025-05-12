@@ -2,10 +2,7 @@
 # -*- coding:utf-8 -*-
 import sys
 import os
-picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
-libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
-if os.path.exists(libdir):
-    sys.path.append(libdir)
+FONTDIC = "/home/pi/Soil_monitoring_azure/Font.ttc"
 
 import logging
 import epd2in13b_V4
@@ -55,8 +52,8 @@ try:
     
     # Drawing on the image
     logging.info("Drawing")    
-    font20 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 20)
-    font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
+    font20 = ImageFont.truetype(FONTDIC, 20)
+    font18 = ImageFont.truetype(FONTDIC, 18)
     
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...") 
