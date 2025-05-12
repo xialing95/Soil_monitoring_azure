@@ -56,7 +56,7 @@ try:
     drawblack = ImageDraw.Draw(HBlackimage)
     drawry = ImageDraw.Draw(HRYimage)
     drawblack.text((10, 0), f"IP: {ip}", font = font20, fill = 0)
-    drawblack.text((10, 20), "Wi-Fi SSID: {ssid}", font = font20, fill = 0)
+    drawblack.text((10, 20), f"Wi-Fi SSID: {ssid}", font = font20, fill = 0)
     epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRYimage))
     time.sleep(2)
     
