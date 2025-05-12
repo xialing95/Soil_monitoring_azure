@@ -30,14 +30,13 @@ def get_wifi_name():
         result = subprocess.check_output(["iwgetid", "-r"]).decode().strip()
         return result if result else "Not connected to Wi-Fi"
     except subprocess.CalledProcessError:
-        return "Wi-Fi interface not found or not connected"
+        return "NA"
 
 logging.basicConfig(level=logging.DEBUG)
 
 try:
     ip = get_ip_address()
     ssid = get_wifi_name()
-    logging.info("epd2in13b_V4 Demo")
     
     epd = epd2in13b_V4.EPD()
     logging.info("init and Clear")
@@ -58,15 +57,6 @@ try:
     drawry = ImageDraw.Draw(HRYimage)
     drawblack.text((10, 0), f"IP: {ip}", font = font20, fill = 0)
     drawblack.text((10, 20), "Wi-Fi SSID: {ssid}", font = font20, fill = 0)
-    drawblack.line((20, 50, 70, 100), fill = 0)
-    drawblack.line((70, 50, 20, 100), fill = 0)
-    drawblack.rectangle((20, 50, 70, 100), outline = 0)    
-    drawry.line((165, 50, 165, 100), fill = 0)
-    drawry.line((140, 75, 190, 75), fill = 0)
-    drawry.arc((140, 50, 190, 100), 0, 360, fill = 0)
-    drawry.rectangle((80, 50, 130, 100), fill = 0)
-    drawry.chord((85, 55, 125, 95), 0, 360, fill =1)
-    epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRYimage))
     time.sleep(2)
     
     # logging.info("Clear...")
