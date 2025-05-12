@@ -66,7 +66,6 @@ try:
     drawry = ImageDraw.Draw(HRYimage)
     drawblack.text((10, 0), '10.31.153.230', font = font20, fill = 0)
     drawblack.text((10, 20), '2.13inch e-Paper b V4', font = font20, fill = 0)
-    drawblack.text((120, 0), u'微雪电子', font = font20, fill = 0)    
     drawblack.line((20, 50, 70, 100), fill = 0)
     drawblack.line((70, 50, 20, 100), fill = 0)
     drawblack.rectangle((20, 50, 70, 100), outline = 0)    
@@ -78,9 +77,9 @@ try:
     epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRYimage))
     time.sleep(2)
     
-    # logging.info("Clear...")
-    # epd.init()
-    # epd.clear()
+    logging.info("Clear...")
+    epd.init()
+    epd.clear()
     
     logging.info("Goto Sleep...")
     epd.sleep()
