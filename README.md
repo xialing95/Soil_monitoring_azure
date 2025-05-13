@@ -57,10 +57,11 @@ April 26 2025
 <li>git clone --single-branch --branch master --depth 1 <repository-url>
 <li>source env/bin/activate
 <li>sudo pip freeze > requirements.txt
-<li>sudo pip install -r requirements.txt
+<li>sudo (maybe don't need sudo) pip install -r requirements.txt
 <li>pip3 install bme680  # Official Pimoroni library[2][6]
 <li>sudo apt-get install dnsmasq hostapd python3-flask dhcpcd5 iptables
 
+for turn on SPI for display and i2C for the bme680 sensor
 
 <li> python3 app.py (not sudo)
 <li> sudo /home/pi/Soil_monitoring_azure/env/bin/python hotspot.py --ssid --password
