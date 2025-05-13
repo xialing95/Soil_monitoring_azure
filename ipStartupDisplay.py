@@ -8,7 +8,6 @@ import logging
 import epd2in13b_V4
 import time
 from PIL import Image,ImageDraw,ImageFont
-import traceback
 
 import socket
 import subprocess
@@ -46,8 +45,8 @@ try:
     
     # Drawing on the image
     logging.info("Drawing")    
-    font20 = ImageFont.truetype(FONTDIC, 20)
-    font18 = ImageFont.truetype(FONTDIC, 18)
+    # font20 = ImageFont.truetype(FONTDIC, 20)
+    # font18 = ImageFont.truetype(FONTDIC, 18)
     
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...") 
@@ -55,8 +54,8 @@ try:
     HRYimage = Image.new('1', (epd.height, epd.width), 255)  # 250*122
     drawblack = ImageDraw.Draw(HBlackimage)
     drawry = ImageDraw.Draw(HRYimage)
-    drawblack.text((10, 0), f"IP: {ip}", font = font20, fill = 0)
-    drawblack.text((10, 20), f"Wi-Fi SSID: {ssid}", font = font20, fill = 0)
+    # drawblack.text((10, 0), f"IP: {ip}", font = font20, fill = 0)
+    # drawblack.text((10, 20), f"Wi-Fi SSID: {ssid}", font = font20, fill = 0)
     epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRYimage))
     time.sleep(2)
     
@@ -74,3 +73,4 @@ except KeyboardInterrupt:
     logging.info("ctrl + c:")
     epd2in13b_V4.epdconfig.module_exit(cleanup=True)
     exit()
+
